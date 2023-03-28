@@ -10,13 +10,15 @@ STATISTICS_FIELDS = {
 
 PRODUCT_FIELDS = {
     'title': {'type': 'string', 'required': True},
+    'code': {'type': 'string', 'required': True},
     'description': {'type': 'string', 'required': True},
     'price': {'type': 'float', 'required': True},
     'tva': {"type": 'float', 'required': True},
     'image': {'type': 'file', 'required': True},
     'ingredients': {'type': 'text', 'required': True},
     'category': {'type': 'foreign_key', 'required': True},
-    'brand': {'type': 'foreign_key', 'required': True}
+    'promo': {'type': 'foreign_key', 'required': False},
+    'current_quantity': {'type': 'integer', 'required': True}
 }
 
 CATEGORY_FIELDS = {
@@ -52,10 +54,10 @@ class ProductService(Service):
         product = super().create(data)
         product.category.number_products += 1
         product.category.save()
-        product.promo.number_products += 1
-        product.promo.save()
-        product.brand.number_products += 1
-        product.brand.save()
+
+        if product.promo is not None:
+            product.promo.number_products += 1
+            product.promo.save()
         return product
 
 

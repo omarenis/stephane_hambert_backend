@@ -3,10 +3,10 @@ from django.db.models import Model, CharField, FloatField, BigIntegerField, Text
 from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
 
 
-
 # Create your models here.
 class Product(Model):
     title = CharField(null=False, unique=True, max_length=255)
+    code = CharField(null=False, unique=True, max_length=255)
     description = TextField(null=False)
     price = FloatField(null=False)
     current_quantity = BigIntegerField(null=False, default=1)
@@ -15,21 +15,19 @@ class Product(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     ingredients = TextField(null=False)
     category = ForeignKey(to='Category', on_delete=SET_NULL, null=True)
-    brand = ForeignKey(to='Brand', on_delete=SET_NULL, null=True)
+    promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
 
     class Meta:
         db_table = 'products'
 
 
 class Category(Model):
-
     image = ImageField(upload_to='mages/categories', null=False)
     label = CharField(null=False, unique=True, max_length=255)
     description = TextField(null=False)
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
-
 
     class Meta:
         db_table = 'categories'
@@ -40,7 +38,6 @@ class Brand(Model):
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
-
 
     class Meta:
         db_table = 'brands'
@@ -55,23 +52,19 @@ class Promo(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
 
-
     class Meta:
         db_table = 'promos'
 
 
-class ProductSerializer(ModelSerializer):
-    image = ImageFieldSerializer(read_only=True)
-
+class CategorySerializer(ModelSerializer):
     class Meta:
-        model = Product
+        model = Category
         fields = '__all__'
 
 
-class CategorySerializer(ModelSerializer):
-
+class BrandSerializer(ModelSerializer):
     class Meta:
-        model = Category
+        model = Brand
         fields = '__all__'
 
 
@@ -81,7 +74,11 @@ class PromoSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class BrandSerializer(ModelSerializer):
+class ProductSerializer(ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    promo = PromoSerializer(read_only=True)
+
     class Meta:
-        model = Brand
-        fields = '__all__'
+        model = Product
+        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
+                  'ingredients', 'category', 'promo']
