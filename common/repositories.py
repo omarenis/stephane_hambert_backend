@@ -9,11 +9,11 @@ class Repository(object):
     def list(self):
         return self.model.objects.all()
 
-    def retrieve(self, _id: int):
-        return self.model.objects.get(id=_id)
+    def retrieve(self, pk: int):
+        return self.model.objects.get(id=pk)
 
-    def put(self, _id: int, data: dict):
-        _object = self.model.objects.get(id=_id)
+    def put(self, pk: int, data: dict):
+        _object = self.model.objects.get(id=pk)
         if _object is None:
             return Exception('object not found')
         else:
@@ -29,8 +29,8 @@ class Repository(object):
     def create(self, data: dict):
         return self.model.objects.create(**data)
 
-    def delete(self, _id):
-        return self.model.objects.get(pk=_id).delete()
+    def delete(self, pk):
+        return self.model.objects.get(pk=pk).delete()
 
     def filter_by(self, data: dict):
         return self.model.objects.filter(**data)
