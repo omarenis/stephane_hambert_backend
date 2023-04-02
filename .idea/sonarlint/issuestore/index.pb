@@ -21,6 +21,3 @@ E
 crm/services.py,d/9/d966e3a88a229f60b2fd8b02d6b3b692dbc403fa
 <
 crm/views.py,b/6/b6296b3ea1479edb29e44b64ae39f6586328b599
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

@@ -21,6 +21,3 @@ E
 backend/urls.py,e/8/e86ee5a9c15adf9e0f1eef0379032fc6cd65bd41
 ?
 crm/services.py,d/9/d966e3a88a229f60b2fd8b02d6b3b692dbc403fa
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
