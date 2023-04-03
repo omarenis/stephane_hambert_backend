@@ -71,19 +71,19 @@ class ViewSet(ModelViewSet):
                                                         response_code=HTTP_201_CREATED)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
-        data = self.service.retrieve(_id=pk)
-        if data is None:
+        try:
+            data = self.service.retrieve(pk=pk)
+        except  self.service.repository.model.DoesNotExist:
             return Response(data={'error': 'object not found'}, status=HTTP_404_NOT_FOUND)
-        else:
-            return return_serialized_data_or_error_response(_object=data, serializer_class=self.serializer_class,
-                                                            response_code=HTTP_200_OK)
+        return return_serialized_data_or_error_response(_object=data, serializer_class=self.serializer_class,
+                                                        response_code=HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs):
         if pk is None:
             return Response(data={'error': 'id must not be null'}, status=HTTP_400_BAD_REQUEST)
-        if self.service.retrieve(_id=pk) is None:
+        if self.service.retrieve(pk=pk) is None:
             return Response(data={'error': 'object not found'}, status=HTTP_404_NOT_FOUND)
-        return return_serialized_data_or_error_response(_object=self.service.put(_id=pk, data=request.data),
+        return return_serialized_data_or_error_response(_object=self.service.put(pk=pk, data=request.data),
                                                         serializer_class=self.serializer_class,
                                                         response_code=HTTP_201_CREATED)
 
