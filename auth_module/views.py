@@ -33,7 +33,7 @@ def login_view(request, *args, **kwargs):
             'username': request.data.get('username'),
             'password': request.data.get('password')
         })
-        if user.customerprofile.has_two_factors_authentication:
+        if user.is_superuser is False and user.customerprofile.has_two_factors_authentication:
             send_code(user.email)
             return Response(data={}, status=HTTP_200_OK)
         return generate_token_for_user(user)
@@ -55,8 +55,8 @@ def verify_code_view(request, *args, **kwargs):
         return Response(data={'message': str(exception)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@csrf_exempt
 @api_view(['POST'])
+@csrf_exempt
 def signup_view(request, *args, **kwargs):
     try:
         signup({
@@ -67,7 +67,8 @@ def signup_view(request, *args, **kwargs):
             'password': request.data.get('password'),
             'facebook': request.data.get('facebook'),
             'google': request.data.get('google'),
-            'phone': request.data.get('phone')
+            'phone': request.data.get('phone'),
+            'gender': request.data.get('gender')
         })
         return Response(status=HTTP_204_NO_CONTENT)
     except Exception as exception:

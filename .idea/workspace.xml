@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41a9936-8922-40a5-8321-eb70ba943dae" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/crm/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stock_management/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stephane_hambert_backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stephane_hambert_backend.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crm/migrations/0005_customerprofile_gender.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth_module/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth_module/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +46,9 @@
     "dart.analysis.tool.window.visible": "false",
     "last_opened_file_path": "/home/ubuntu/Documents/mycompanywork/stephan_hambert_project/backend",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -95,6 +93,9 @@
       <workItem from="1680011492152" duration="988000" />
       <workItem from="1680016196224" duration="4674000" />
       <workItem from="1680474704269" duration="280000" />
+      <workItem from="1680475048456" duration="1070000" />
+      <workItem from="1680478842826" duration="201000" />
+      <workItem from="1680487150671" duration="108000" />
     </task>
     <servers />
   </component>
