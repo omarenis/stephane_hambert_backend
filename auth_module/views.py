@@ -33,7 +33,7 @@ def login_view(request, *args, **kwargs):
             'username': request.data.get('username'),
             'password': request.data.get('password')
         })
-        if user.customerprofile.has_two_factors_authentication:
+        if user.is_superuser is False and user.customerprofile.has_two_factors_authentication:
             send_code(user.email)
             return Response(data={}, status=HTTP_200_OK)
         return generate_token_for_user(user)
