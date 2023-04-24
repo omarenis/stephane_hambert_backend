@@ -31,3 +31,4 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         exclude = ('password',)
+

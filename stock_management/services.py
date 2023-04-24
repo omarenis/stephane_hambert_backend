@@ -9,8 +9,8 @@ STATISTICS_FIELDS = {
 }
 
 PRODUCT_FIELDS = {
-    'title': {'type': 'string', 'required': True},
-    'code': {'type': 'string', 'required': True},
+    'title': {'type': 'string', 'required': True, 'unique': True},
+    'code': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
     'price': {'type': 'float', 'required': True},
     'tva': {"type": 'float', 'required': True},
@@ -22,7 +22,7 @@ PRODUCT_FIELDS = {
 }
 
 CATEGORY_FIELDS = {
-    'label': {'type': 'string', 'required': True},
+    'label': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
     'image': {'type': 'image', 'required': True}
 }
@@ -32,7 +32,7 @@ BRAND_FIELDS = {
 }
 
 PROMO_FIELDS = {
-    'label': {'type': 'string', 'required': True},
+    'label': {'type': 'string', 'required': True, 'unique': True},
     'datetime_start': {'type': 'datetime', 'required': True},
     'datetime_end': {'type': 'datetime', 'required': True},
     'percentage': {'type': 'float', 'required': True}
@@ -59,7 +59,17 @@ class ProductService(Service):
             product.promo.number_products += 1
             product.promo.save()
         return product
-
+    
+    def delete(self, pk: int):
+        product = self.repository.retrieve(pk=pk)
+        category = product.category
+        promo = product.promo
+        deleted = super().delete(pk)
+        if deleted:
+            category.number_products -= 1
+            if promo is not None:
+                promo.number_products -= 1
+        return deleted
 
 class CategoryService(Service):
 

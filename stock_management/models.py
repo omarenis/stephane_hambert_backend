@@ -20,7 +20,6 @@ class Product(Model):
     class Meta:
         db_table = 'products'
 
-
 class Category(Model):
     image = ImageField(upload_to='mages/categories', null=False)
     label = CharField(null=False, unique=True, max_length=255)

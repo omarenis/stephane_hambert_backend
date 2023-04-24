@@ -8,7 +8,7 @@ class Service(object):
             if data.get(i) is None and self.fields[i].get('required') is True:
                 return ValueError(f'{i} must not be null')
             if data.get(i) is not None and self.fields.get(i).get('type') == 'foreign_key':
-                data[f'{i}pk'] = data.pop(i)
+                data[f'{i}_id'] = data.pop(i)
 
     def __init__(self, repository: Repository, fields: dict):
         self.repository = repository

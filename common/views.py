@@ -64,6 +64,14 @@ class ViewSet(ModelViewSet):
             if request.data.get(i) is None and self.fields[i]['required']:
                 return Response(data={'error': f'{i} is required'}, status=HTTP_400_BAD_REQUEST)
             data[i] = request.data.get(i)
+        for i in self.fields:
+            if self.fields[i].get('unique') is True:
+                try:
+                    filter = {i: data[i]}
+                    self.service.repository.model.objects.get(**filter)
+                    return Response(data={'message': f'{i} must be unique to each {self.service.repository.model.__name__}'}, status=HTTP_400_BAD_REQUEST)
+                except self.service.repository.model.DoesNotExist:
+                    pass
         _object = self.service.create(data)
         if isinstance(_object, Exception):
             return Response(data={"error": str(_object)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
