@@ -1,6 +1,6 @@
 from common.repositories import Repository
 from common.services import Service
-from stock_management.models import Product, Category, Promo, Brand
+from stock_management.models import Product, Category, Promo
 
 STATISTICS_FIELDS = {
     'number_products': {'type': 'int', 'required': False},
@@ -27,10 +27,6 @@ CATEGORY_FIELDS = {
     'image': {'type': 'image', 'required': True}
 }
 
-BRAND_FIELDS = {
-    'label': {'type': 'string', 'required': True}
-}
-
 PROMO_FIELDS = {
     'label': {'type': 'string', 'required': True, 'unique': True},
     'datetime_start': {'type': 'datetime', 'required': True},
@@ -40,7 +36,6 @@ PROMO_FIELDS = {
 
 CATEGORY_FIELDS.update(STATISTICS_FIELDS)
 PROMO_FIELDS.update(STATISTICS_FIELDS)
-BRAND_FIELDS.update(STATISTICS_FIELDS)
 
 
 class ProductService(Service):
@@ -59,7 +54,7 @@ class ProductService(Service):
             product.promo.number_products += 1
             product.promo.save()
         return product
-    
+
     def delete(self, pk: int):
         product = self.repository.retrieve(pk=pk)
         category = product.category
@@ -70,6 +65,7 @@ class ProductService(Service):
             if promo is not None:
                 promo.number_products -= 1
         return deleted
+
 
 class CategoryService(Service):
 
@@ -83,11 +79,4 @@ class PromoService(Service):
     def __init__(self, repository=Repository(model=Promo), fields=None):
         if fields is None:
             fields = PROMO_FIELDS
-        super().__init__(repository, fields)
-
-
-class BrandService(Service):
-    def __init__(self, repository=Repository(model=Brand), fields=None):
-        if fields is None:
-            fields = BRAND_FIELDS
         super().__init__(repository, fields)

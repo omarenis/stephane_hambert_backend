@@ -12,9 +12,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="6ecfe295-3549-4705-acf1-b3ca9e338b8a">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from main.auth_user;
-delete from main.auth_user where 1;]]></console>
+    <connection id="d717b5c2-6474-4456-addc-09db350626c1">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -33,6 +32,17 @@ delete from main.auth_user where 1;]]></console>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/products.sql" connection-id="d717b5c2-6474-4456-addc-09db350626c1" session-id="MAIN" current-schema="main" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
@@ -42,7 +52,7 @@ delete from main.auth_user where 1;]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="6ecfe295-3549-4705-acf1-b3ca9e338b8a" active="true" signed="true">
+      <connection id="d717b5c2-6474-4456-addc-09db350626c1" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />

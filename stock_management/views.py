@@ -23,14 +23,8 @@ class PromoteViewSet(ViewSet):
         super().__init__(serializer_class, service, **kwargs)
 
 
-class BrandViewSet(ViewSet):
-    def __init__(self, serializer_class=PromoSerializer, service=PromoService(), **kwargs):
-        super().__init__(serializer_class, service, **kwargs)
-
-
 products, product = ProductViewSet.get_urls()
 categories, category = CategoryViewSet.get_urls()
-brands, brand = BrandViewSet.get_urls()
 promos, promo = PromoteViewSet.get_urls()
 
 urlpatterns = [
@@ -38,8 +32,6 @@ urlpatterns = [
     path('products/<int:pk>', product),
     path('categories', categories),
     path('categories/<int:pk>', category),
-    path('brands', brands),
-    path('brands/<int:pk>', brand),
-    path('promos', brands),
-    path('promos/<int:pk>', brand),
+    path('promos', promos),
+    path('promos/<int:pk>', promo),
 ]

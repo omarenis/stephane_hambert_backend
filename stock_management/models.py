@@ -16,9 +16,11 @@ class Product(Model):
     ingredients = TextField(null=False)
     category = ForeignKey(to='Category', on_delete=SET_NULL, null=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
+    updated_at = DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'products'
+
 
 class Category(Model):
     image = ImageField(upload_to='mages/categories', null=False)
@@ -30,16 +32,6 @@ class Category(Model):
 
     class Meta:
         db_table = 'categories'
-
-
-class Brand(Model):
-    label = CharField(null=False, unique=True, max_length=255)
-    number_products = BigIntegerField(null=False, default=0)
-    number_purchases = BigIntegerField(null=False, default=0)
-    total_gain = FloatField(null=False, default=0.0)
-
-    class Meta:
-        db_table = 'brands'
 
 
 class Promo(Model):
@@ -58,12 +50,6 @@ class Promo(Model):
 class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
-
-
-class BrandSerializer(ModelSerializer):
-    class Meta:
-        model = Brand
         fields = '__all__'
 
 
