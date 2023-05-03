@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model, URLField, CharField, OneToOneField, CASCADE, BooleanField, BigIntegerField, \
-    FloatField, TextField
+    FloatField, TextField, ForeignKey
 from rest_framework.serializers import ModelSerializer
 
 
@@ -32,3 +32,6 @@ class UserSerializer(ModelSerializer):
         model = User
         exclude = ('password',)
 
+class Comment(Model):
+
+    customer = ForeignKey()
