@@ -2,6 +2,8 @@ from django.db.models import Model, CharField, FloatField, BigIntegerField, Text
     CASCADE, SET_NULL, ImageField
 from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
 
+from crm.models import CommentSerializer
+
 
 # Create your models here.
 class Product(Model):
@@ -80,8 +82,9 @@ class ProductSerializer(ModelSerializer):
     collection = CollectionSerializer(read_only=True)
     promo = PromoSerializer(read_only=True)
     category = CategorySerializer(read_only=True)
+    comment_set = CommentSerializer(read_only=True)
 
     class Meta:
         model = Product
         fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
-                  'ingredients', 'collection', 'promo', 'category']
+                  'ingredients', 'collection', 'promo', 'category', 'comment_set']
