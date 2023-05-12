@@ -1,6 +1,6 @@
 from common.repositories import Repository
 from common.services import Service
-from stock_management.models import Product, Category, Promo, Brand
+from stock_management.models import Product, Category, Promo, Collection
 
 STATISTICS_FIELDS = {
     'number_products': {'type': 'int', 'required': False},
@@ -21,15 +21,17 @@ PRODUCT_FIELDS = {
     'current_quantity': {'type': 'integer', 'required': True}
 }
 
-CATEGORY_FIELDS = {
+COLLECTION_FIELDS = {
     'label': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
     'image': {'type': 'image', 'required': True}
 }
 
-BRAND_FIELDS = {
-    'label': {'type': 'string', 'required': True}
+
+CATEGORY_FIELDS = {
+    'title': {'type': 'string', 'required': True}
 }
+
 
 PROMO_FIELDS = {
     'label': {'type': 'string', 'required': True, 'unique': True},
@@ -40,7 +42,6 @@ PROMO_FIELDS = {
 
 CATEGORY_FIELDS.update(STATISTICS_FIELDS)
 PROMO_FIELDS.update(STATISTICS_FIELDS)
-BRAND_FIELDS.update(STATISTICS_FIELDS)
 
 
 class ProductService(Service):
@@ -54,12 +55,14 @@ class ProductService(Service):
         product = super().create(data)
         product.category.number_products += 1
         product.category.save()
+        product.collection += 1
+        product.collection.save()
 
         if product.promo is not None:
             product.promo.number_products += 1
             product.promo.save()
         return product
-    
+
     def delete(self, pk: int):
         product = self.repository.retrieve(pk=pk)
         category = product.category
@@ -70,6 +73,15 @@ class ProductService(Service):
             if promo is not None:
                 promo.number_products -= 1
         return deleted
+
+
+class CollectionService(Service):
+
+    def __init__(self, repository=Repository(model=Collection), fields=None):
+        if fields is None:
+            fields = COLLECTION_FIELDS
+        super().__init__(repository, fields)
+
 
 class CategoryService(Service):
 
@@ -83,11 +95,4 @@ class PromoService(Service):
     def __init__(self, repository=Repository(model=Promo), fields=None):
         if fields is None:
             fields = PROMO_FIELDS
-        super().__init__(repository, fields)
-
-
-class BrandService(Service):
-    def __init__(self, repository=Repository(model=Brand), fields=None):
-        if fields is None:
-            fields = BRAND_FIELDS
         super().__init__(repository, fields)

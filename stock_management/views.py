@@ -2,14 +2,20 @@ from django.shortcuts import render
 from django.urls import path
 
 from common.views import ViewSet
-from stock_management.models import ProductSerializer, CategorySerializer, PromoSerializer
-from stock_management.services import ProductService, PromoService, CategoryService
+from stock_management.models import ProductSerializer, CategorySerializer, PromoSerializer, CollectionSerializer
+from stock_management.services import ProductService, PromoService, CategoryService, CollectionService
 
 
 # Create your views here.
 class ProductViewSet(ViewSet):
 
     def __init__(self, serializer_class=ProductSerializer, service=ProductService(), **kwargs):
+        super().__init__(serializer_class, service, **kwargs)
+
+
+class CollectionViewSet(ViewSet):
+
+    def __init__(self, serializer_class=CollectionSerializer, service=CollectionService(), **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
 
@@ -23,23 +29,17 @@ class PromoteViewSet(ViewSet):
         super().__init__(serializer_class, service, **kwargs)
 
 
-class BrandViewSet(ViewSet):
-    def __init__(self, serializer_class=PromoSerializer, service=PromoService(), **kwargs):
-        super().__init__(serializer_class, service, **kwargs)
-
-
 products, product = ProductViewSet.get_urls()
 categories, category = CategoryViewSet.get_urls()
-brands, brand = BrandViewSet.get_urls()
 promos, promo = PromoteViewSet.get_urls()
-
+collections, collection = CollectionViewSet.get_urls()
 urlpatterns = [
     path('products', products),
     path('products/<int:pk>', product),
     path('categories', categories),
     path('categories/<int:pk>', category),
-    path('brands', brands),
-    path('brands/<int:pk>', brand),
-    path('promos', brands),
-    path('promos/<int:pk>', brand),
+    path('promos', promos),
+    path('promos/<int:pk>', promo),
+    path('collections', collections),
+    path('collections/<int:pk>', collection)
 ]

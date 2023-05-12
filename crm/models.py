@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model, URLField, CharField, OneToOneField, CASCADE, BooleanField, BigIntegerField, \
-    FloatField, TextField
+    FloatField, TextField, ForeignKey, SET_NULL
 from rest_framework.serializers import ModelSerializer
 
 
@@ -32,3 +32,15 @@ class UserSerializer(ModelSerializer):
         model = User
         exclude = ('password',)
 
+
+class Comment(Model):
+    customer = ForeignKey(to='CustomerProfile', null=True, on_delete=SET_NULL)
+    product = ForeignKey(to='stock_management.Product', on_delete=CASCADE, null=False)
+    content = TextField(null=False)
+
+
+class CommentSerializer(ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = '__all__'

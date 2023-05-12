@@ -3,42 +3,13 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="c41a9936-8922-40a5-8321-eb70ba943dae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_4_2023__11_17___Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_4_2023__11_17___Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_4_2023__11_17___Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2‏_4‏_2023,_11_17_م_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/8/d8c5b0296c06cfac1c833cd9b9962e298405bd8e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/8/e86ee5a9c15adf9e0f1eef0379032fc6cd65bd41" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stephane_hambert_backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stephane_hambert_backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crm/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/crm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/crm/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_management/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock_management/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_management/services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +18,13 @@
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,11 +45,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="sqlite" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/home/ubuntu/Documents/freelance_projects/lzindustry/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager">
     <configuration name="stephane_hambert_backend" type="Python.DjangoServer" factoryName="Django server">
       <module name="stephane_hambert_backend" />
@@ -115,54 +105,37 @@
       <workItem from="1680475048456" duration="1070000" />
       <workItem from="1680478842826" duration="201000" />
       <workItem from="1680487150671" duration="108000" />
-      <workItem from="1680513840196" duration="35000" />
-      <workItem from="1680515030132" duration="1540000" />
-      <workItem from="1680606405000" duration="257000" />
-      <workItem from="1681165401340" duration="2662000" />
+      <workItem from="1680487754757" duration="2798000" />
+      <workItem from="1681435344120" duration="186000" />
+      <workItem from="1681435632637" duration="4248000" />
+      <workItem from="1681588276854" duration="180000" />
+      <workItem from="1682314246864" duration="90000" />
+      <workItem from="1682318561916" duration="1159000" />
+      <workItem from="1682448415657" duration="656000" />
+      <workItem from="1682545750643" duration="1258000" />
+      <workItem from="1682547618534" duration="427000" />
+      <workItem from="1682627456302" duration="1177000" />
+      <workItem from="1682715583926" duration="37000" />
+      <workItem from="1682717872648" duration="18000" />
+      <workItem from="1682936525525" duration="2607000" />
+      <workItem from="1682945806842" duration="34000" />
+      <workItem from="1683007065874" duration="880000" />
+      <workItem from="1683066936083" duration="2870000" />
+      <workItem from="1683241133332" duration="254000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="361" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1681166129125">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1681166129125" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1680515089689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1680515089689" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1681166115659">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1681166115659" />
-    <state x="588" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1680512906990">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="588" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1680512906990" />
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_code.coverage" NAME="Test: auth_module.tests.AuthTest.test_code Coverage Results" MODIFIED="1679948627323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/backend$Test__crm_tests_CustomerServiceTestCase_test_create_customer.coverage" NAME="Test: crm.tests.CustomerServiceTestCase.test_create_customer Coverage Results" MODIFIED="1680391907633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_reset_password.coverage" NAME="Test: auth_module.tests.AuthTest.test_reset_password Coverage Results" MODIFIED="1679959141046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_verify_code.coverage" NAME="Test: auth_module.tests.AuthTest.test_verify_code Coverage Results" MODIFIED="1679959179680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_signup.coverage" NAME="Test: auth_module.tests.AuthTest.test_signup Coverage Results" MODIFIED="1680461103883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_reset_password.coverage" NAME="Test: auth_module.tests.AuthTest.test_reset_password Coverage Results" MODIFIED="1679959141046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$Test__crm_tests_CustomerServiceTestCase_test_create_customer.coverage" NAME="Test: crm.tests.CustomerServiceTestCase.test_create_customer Coverage Results" MODIFIED="1680391907633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_verify_code.coverage" NAME="Test: auth_module.tests.AuthTest.test_verify_code Coverage Results" MODIFIED="1679959179680" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/backend$Test__auth_module_tests_AuthTest_test_code.coverage" NAME="Test: auth_module.tests.AuthTest.test_code Coverage Results" MODIFIED="1679948627323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
