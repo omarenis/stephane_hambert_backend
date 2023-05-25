@@ -17,7 +17,7 @@ class Product(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     ingredients = TextField(null=False)
     collection = ForeignKey(to='Collection', on_delete=SET_NULL, null=True)
-    category = ForeignKey(to='category', on_delete=SET_NULL, null=True)
+    category = ForeignKey(to='Category', on_delete=SET_NULL, null=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
 

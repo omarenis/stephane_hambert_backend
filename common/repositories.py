@@ -32,5 +32,9 @@ class Repository(object):
     def delete(self, pk):
         return self.model.objects.get(pk=pk).delete()
 
-    def filter_by(self, data: dict):
-        return self.model.objects.filter(**data)
+    def filter_by(self, data: dict, limit=None, order_by=None):
+        data = self.model.objects.filter(**data)
+        if order_by is not None and isinstance(order_by, list) and order_by != []:
+            for args in order_by:
+                data = data.order_by(args)
+        return data

@@ -74,7 +74,6 @@ def verify_code(email, code):
         'realm': 'email',
         'username': email
     }).text)
-    print(response)
     if response.get('error') is not None:
         raise ValueError(response.get('error_description'))
     return response
