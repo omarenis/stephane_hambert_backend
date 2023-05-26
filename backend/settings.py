@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'stock_management',
     'auth_module',
-    'crm'
+    'crm',
+    'ecommerce'
 ]
 
 DOMAIN = 'https://dev-r2k0w0yq8vtxnpz2.us.auth0.com'

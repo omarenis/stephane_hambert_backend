@@ -67,9 +67,13 @@ class ProductService(Service):
         product = self.repository.retrieve(pk=pk)
         category = product.category
         promo = product.promo
+        collection = product.collection
         deleted = super().delete(pk)
         if deleted:
             category.number_products -= 1
+            category.save()
+            collection.number_products -= 1
+            collection.save()
             if promo is not None:
                 promo.number_products -= 1
         return deleted

@@ -1,7 +1,6 @@
 from django.db.models import Model, CharField, FloatField, BigIntegerField, TextField, DateTimeField, ForeignKey, \
     CASCADE, SET_NULL, ImageField
 from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
-
 from crm.models import CommentSerializer
 
 

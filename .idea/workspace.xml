@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c41a9936-8922-40a5-8321-eb70ba943dae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/a/1a1b9c1cd20e92033586640f036b53d59e4466c9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/3/e3b66993770b8bd17727389114408abe2710d4f6" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/a/1a1b9c1cd20e92033586640f036b53d59e4466c9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/3/e3b66993770b8bd17727389114408abe2710d4f6" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crm/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/crm/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_management/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_management/services.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +58,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "/home/ubuntu/Documents/freelance_projects/lzindustry/backend",
+    "last_opened_file_path": "/home/ubuntu/Documents/mycompanywork/stephan_hambert_project/backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -122,6 +128,12 @@
       <workItem from="1683007065874" duration="880000" />
       <workItem from="1683066936083" duration="2870000" />
       <workItem from="1683241133332" duration="254000" />
+      <workItem from="1683699513210" duration="191000" />
+      <workItem from="1683833820460" duration="90000" />
+      <workItem from="1683841214405" duration="4546000" />
+      <workItem from="1683873181365" duration="149000" />
+      <workItem from="1683916364089" duration="4027000" />
+      <workItem from="1684788687758" duration="187000" />
     </task>
     <servers />
   </component>

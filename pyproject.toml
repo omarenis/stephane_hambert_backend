@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "stephane-number-backend"
+version = "0.1.0"
+description = ""
+authors = ["omar triki <omar.triki@enis.tn>"]
+readme = "README.md"
+packages = [{include = "stephane_number_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.2.1"
+djangorestframework = "^3.14.0"
+djangorestframework-simplejwt = "^5.2.2"
+django-cors-headers = "^4.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
