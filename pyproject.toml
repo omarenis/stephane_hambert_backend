@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "stephane-number-backend"
+name = ""
 version = "0.1.0"
 description = ""
 authors = ["omar triki <omar.triki@enis.tn>"]
 readme = "README.md"
-packages = [{include = "stephane_number_backend"}]
+packages = [{include = "../backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
