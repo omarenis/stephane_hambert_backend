@@ -17,7 +17,7 @@ class Order(Model):
 class OrderLine(Model):
 
     order = ForeignKey(to='Order', on_delete=CASCADE)
-    product = ForeignKey(to='stock_management.', on_delete=CASCADE)
+    product = ForeignKey(to='stock_management.Product', on_delete=CASCADE)
     quantity = BigIntegerField(null=False)
     date_order = DateTimeField(auto_now_add=True)
     totalHt = FloatField()
