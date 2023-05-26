@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from .services import login, find_user_by_username_or_email, send_code, verify_code, signup
 from rest_framework.decorators import api_view, permission_classes
 from django.views.decorators.csrf import csrf_exempt
@@ -77,8 +79,19 @@ def signup_view(request, *args, **kwargs):
         return Response(data={'message': str(exception)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+@api_view(['POST'])
+def reset_password(request, *args, **kwargs):
+    user = request.user if request.user.is_authenticated else find_user_by_username_or_email({'username': request.data.get('username')})
+    if user is None:
+        return Response(data={'message': 'user not found wirth the given username or email'}, status=HTTP_404_NOT_FOUND)
+    user.set_password(request.data.get('password'))
+    user.save()
+    return Response(data={'message': 'password reset successfully'}, status=HTTP_200_OK)
+
+
 urlpatterns = [
     path('login', login_view),
     path('signup', signup_view),
-    path('verify_code', verify_code_view)
+    path('verify_code', verify_code_view),
+    path('reset_password', reset_password)
 ]
