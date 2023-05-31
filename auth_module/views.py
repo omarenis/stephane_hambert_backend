@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR, \
-    HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_401_UNAUTHORIZED
+    HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_401_UNAUTHORIZED, HTTP_201_CREATED
 from django.contrib.auth.models import User
 from crm.services import CustomerService
 from django.urls import path
@@ -72,7 +72,7 @@ def signup_view(request, *args, **kwargs):
             'phone': request.data.get('phone'),
             'gender': request.data.get('gender')
         })
-        return Response(status=HTTP_204_NO_CONTENT)
+        return Response(status=HTTP_201_CREATED, data={})
     except Exception as exception:
         if isinstance(exception, ValueError):
             return Response(data={'message': 'account already found'}, status=HTTP_400_BAD_REQUEST)

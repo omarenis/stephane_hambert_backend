@@ -25,7 +25,7 @@ class CategoryViewSet(ViewSet):
 
 
 class PromoteViewSet(ViewSet):
-    def __init__(self, serializer_class, service, **kwargs):
+    def __init__(self, serializer_class=PromoSerializer, service=PromoService(), **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
 

@@ -55,7 +55,7 @@ class ProductService(Service):
         product = super().create(data)
         product.category.number_products += 1
         product.category.save()
-        product.collection += 1
+        product.collection.number_products += 1
         product.collection.save()
 
         if product.promo is not None:
