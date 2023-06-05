@@ -88,6 +88,10 @@ def reset_password(request, *args, **kwargs):
     user.save()
     return Response(data={'message': 'password reset successfully'}, status=HTTP_200_OK)
 
+#
+# @api_view(['GET', 'POST'])
+# def forget_password(request, *args, **kwargs):
+#
 
 urlpatterns = [
     path('login', login_view),

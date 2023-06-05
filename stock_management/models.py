@@ -1,5 +1,5 @@
 from django.db.models import Model, CharField, FloatField, BigIntegerField, TextField, DateTimeField, ForeignKey, \
-    CASCADE, SET_NULL, ImageField
+    CASCADE, SET_NULL, ImageField, SlugField
 from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
 from crm.models import CommentSerializer
 
@@ -19,7 +19,7 @@ class Product(Model):
     category = ForeignKey(to='Category', on_delete=SET_NULL, null=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
-
+    slug = SlugField(null=False)
     class Meta:
         db_table = 'products'
 

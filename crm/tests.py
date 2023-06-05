@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-from crm.models import UserSerializer, CustomerSerializer
+from crm.models import UserSerializer, CustomerProfileSerializer
 from crm.services import CustomerService
 
 
@@ -9,7 +9,7 @@ class CustomerServiceTestCase(TestCase):
     def setUp(self) -> None:
         self.customerService = CustomerService()
         self.user_serializer = UserSerializer
-        self.customer_serializer = CustomerSerializer
+        self.customer_serializer = CustomerProfileSerializer
 
     def test_create_customer(self):
         data = {
