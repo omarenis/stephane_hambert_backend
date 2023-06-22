@@ -29,7 +29,7 @@ COLLECTION_FIELDS = {
 
 
 CATEGORY_FIELDS = {
-    'title': {'type': 'string', 'required': True}
+    'title': {'type': 'string', 'required': True, 'unique': True}
 }
 
 
