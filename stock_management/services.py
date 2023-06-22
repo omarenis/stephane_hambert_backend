@@ -64,7 +64,7 @@ class ProductService(Service):
         return product
 
     def delete(self, pk: int):
-        product = self.repository.retrieve(pk=pk)
+        product = self.repository.retrieve_by_id(pk=pk)
         category = product.category
         promo = product.promo
         collection = product.collection

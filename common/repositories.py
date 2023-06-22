@@ -9,8 +9,14 @@ class Repository(object):
     def list(self):
         return self.model.objects.all()
 
-    def retrieve(self, pk: int):
+    def retrieve_by_id(self, pk: int):
         return self.model.objects.get(id=pk)
+
+    def retrieve(self, data):
+        try:
+            return self.model.objects.get(**data)
+        except self.model.DoesNotExist:
+            raise self.model.DoesNotExist('item does not exists with the specified data')
 
     def put(self, pk: int, data: dict):
         _object = self.model.objects.get(id=pk)
