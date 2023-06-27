@@ -7,7 +7,7 @@ class Service(object):
         for i in self.fields:
             if data.get(i) is None and self.fields[i].get('required') is True:
                 raise ValueError(f'{i} must not be null')
-            if data.get('i').get('type') == 'foreign_key' and data.get(i) is not None:
+            if self.fields.get(i).get('type') == 'foreign_key' and data.get(i) is not None:
                 data[f'{i}_id'] = data.pop(i)
             elif self.fields[i].get('unique') is True:
                 try:
