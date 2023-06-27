@@ -20,6 +20,7 @@ class Product(Model):
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
+
     class Meta:
         db_table = 'products'
 
