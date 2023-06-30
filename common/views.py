@@ -69,7 +69,9 @@ class ViewSet(ModelViewSet):
                 try:
                     filter = {i: data[i]}
                     self.service.repository.model.objects.get(**filter)
-                    return Response(data={'message': f'{i} must be unique to each {self.service.repository.model.__name__}'}, status=HTTP_400_BAD_REQUEST)
+                    return Response(
+                        data={'message': f'{i} must be unique to each {self.service.repository.model.__name__}'},
+                        status=HTTP_400_BAD_REQUEST)
                 except self.service.repository.model.DoesNotExist:
                     pass
         _object = self.service.create(data)
@@ -81,7 +83,7 @@ class ViewSet(ModelViewSet):
     def retrieve(self, request, pk=None, *args, **kwargs):
         try:
             data = self.service.retrieve(pk=pk)
-        except  self.service.repository.model.DoesNotExist:
+        except self.service.repository.model.DoesNotExist:
             return Response(data={'error': 'object not found'}, status=HTTP_404_NOT_FOUND)
         return return_serialized_data_or_error_response(_object=data, serializer_class=self.serializer_class,
                                                         response_code=HTTP_200_OK)

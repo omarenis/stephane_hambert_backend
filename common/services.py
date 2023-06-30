@@ -44,3 +44,10 @@ class Service(object):
                 filter_params[f'{i}__contains'] = data[i]
             filter_params[i] = data[i]
         return self.repository.filter_by(data=filter_params)
+
+    def import_data(self, data: list):
+        for row in data:
+            data = {}
+            for i in self.fields:
+                if self.fields[i].get('type') == 'file':
+
