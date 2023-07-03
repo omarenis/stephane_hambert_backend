@@ -51,7 +51,9 @@ INSTALLED_APPS = [
     'store_management',
     'auth_module',
     'crm',
-    'ecommerce'
+    'ecommerce',
+    'newsletter',
+    'website'
 ]
 
 DOMAIN = 'https://dev-r2k0w0yq8vtxnpz2.us.auth0.com'

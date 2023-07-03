@@ -7,20 +7,6 @@ STATISTICS_FIELDS = {
     'number_purchases': {'type': 'int', 'required': False},
     'total_gain': {'type': 'float', 'required': False}
 }
-
-PRODUCT_FIELDS = {
-    'title': {'type': 'string', 'required': True, 'unique': True},
-    'code': {'type': 'string', 'required': True, 'unique': True},
-    'description': {'type': 'string', 'required': True},
-    'price': {'type': 'float', 'required': True},
-    'tva': {"type": 'float', 'required': True},
-    'image': {'type': 'file', 'required': True},
-    'ingredients': {'type': 'text', 'required': True},
-    'category': {'type': 'foreign_key', 'required': True},
-    'promo': {'type': 'foreign_key', 'required': False},
-    'current_quantity': {'type': 'integer', 'required': True}
-}
-
 COLLECTION_FIELDS = {
     'label': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
@@ -42,6 +28,19 @@ PROMO_FIELDS = {
 
 CATEGORY_FIELDS.update(STATISTICS_FIELDS)
 PROMO_FIELDS.update(STATISTICS_FIELDS)
+
+PRODUCT_FIELDS = {
+    'title': {'type': 'string', 'required': True, 'unique': True},
+    'code': {'type': 'string', 'required': True, 'unique': True},
+    'description': {'type': 'string', 'required': True},
+    'price': {'type': 'float', 'required': True},
+    'tva': {"type": 'float', 'required': True},
+    'image': {'type': 'file', 'required': True},
+    'ingredients': {'type': 'text', 'required': True},
+    'category': {'type': 'foreign_key', 'required': True, 'classMap': Category, 'fieldsClassMap': CATEGORY_FIELDS},
+    'promo': {'type': 'foreign_key', 'required': False},
+    'current_quantity': {'type': 'integer', 'required': True}
+}
 
 
 class ProductService(Service):

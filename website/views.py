@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.shortcuts import render
+from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
@@ -9,9 +10,9 @@ from website.models import Inscription
 
 
 # Create your views here.
+@api_view(['GET'])
 def index(request, *args, **kwargs):
-
-    products = Product.objects.order_by('-price')[:8]
+    products = Product.objects.order_by('-number_purchases')[:8]
     collections = Collection.objects.all()
     return Response(data={
         "products": [ProductSerializer(product).data for product in products],
@@ -19,11 +20,7 @@ def index(request, *args, **kwargs):
     })
 
 
-@api_view(['POST'])
-def newsletter_inscription(request, *args, **kwargs):
-    try:
-        inscription = Inscription.objects.get(email=request.data.email)
-        return Response(data={'message': 'inscription already exists'}, status=HTTP_400_BAD_REQUEST)
-    except Inscription.DoesNotExist:
-        send_mail()
-        Inscription.objects.create(email=request.data.email)
+
+urlpatterns = [
+    path('index', index)
+]

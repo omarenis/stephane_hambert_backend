@@ -1,3 +1,9 @@
+import datetime
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.text import slugify
+from uri import URI
+from urllib.request import urlopen
 from .repositories import Repository
 
 
@@ -8,7 +14,11 @@ class Service(object):
             if data.get(i) is None and self.fields[i].get('required') is True:
                 raise ValueError(f'{i} must not be null')
             if self.fields.get(i).get('type') == 'foreign_key' and data.get(i) is not None:
-                data[f'{i}_id'] = data.pop(i)
+                data[f'{i}_id'] = data.pop (i)
+            elif self.fields[i].get('type') == 'slug':
+                if self.fields[i].get('field_to_slug') is None:
+                    raise ValueError('field to slug must be not None')
+                data[i] = slugify(data[self.fields[i].get('field_to_slug')])
             elif self.fields[i].get('unique') is True:
                 try:
                     self.repository.retrieve({i: data.get(i)})
@@ -50,4 +60,27 @@ class Service(object):
             data = {}
             for i in self.fields:
                 if self.fields[i].get('type') == 'file':
+                    data[i] = SimpleUploadedFile(name=str(URI(str(data[i])).path).split('/')[-1], content=urlopen(url=str(data.get(i))).read())
+                elif self.fields[i].get('type') == 'date' or self.fields[i].get('type') == 'datetime':
+                    data[i] = datetime.datetime.fromisoformat(data[i])
+                elif self.fields[i].get('type') == 'foreign_key':
+                    try:
+                        data[f'{i}__id'] = int(data.pop(i))
+                    except ValueError:
+                        instance, _ = self.fields.get(i).get('classMap').objects.get_or_create(self.import_data())
+
+    def export_data(self):
+        output = {}
+        data = self.repository.list()
+        for row in data:
+            for field in self.fields:
+                if output.get(field) is None:
+                    if self.fields.get(field).get('type') == 'int':
+                        value = int(getattr(row, field))
+                    elif self.fields.get(field).get('type') == 'float':
+                        value = float(getattr(row, field))
+                    elif self.fields.get(field).get('type') == 'file':
+                        value = str(getattr(getattr(data, field), 'url'))
+                    else:
+                        value = str(getattr(row, field))
 

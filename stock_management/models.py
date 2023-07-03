@@ -21,6 +21,8 @@ class Product(Model):
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
 
+    def __str__(self):
+        return self.slug
     class Meta:
         db_table = 'products'
 
@@ -31,6 +33,8 @@ class Category(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
 
+    def __str__(self):
+        return self.title
     class Meta:
         db_table = 'categories'
 
@@ -43,6 +47,8 @@ class Collection(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
 
+    def __str__(self):
+        return self.label
     class Meta:
         db_table = 'collections'
 
@@ -56,6 +62,8 @@ class Promo(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
 
+    def __str__(self):
+        return self.label
     class Meta:
         db_table = 'promos'
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model, URLField, CharField, OneToOneField, CASCADE, BooleanField, BigIntegerField, \
-    FloatField, TextField, ForeignKey, SET_NULL
+    FloatField, TextField, ForeignKey, SET_NULL, EmailField, DateTimeField
 from rest_framework.serializers import ModelSerializer
 
 
@@ -44,3 +44,10 @@ class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
+
+class NotificationForCustomer(Model):
+
+    product = ForeignKey(to='stock_management.Product', on_delete=CASCADE)
+    email = EmailField(unique=True)
+    date_notification = DateTimeField(auto_now_add=True)
