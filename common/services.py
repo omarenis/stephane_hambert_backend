@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.text import slugify
@@ -57,18 +58,20 @@ class Service(object):
 
     def import_data(self, data: list):
         for row in data:
-            data = {}
+            instanceData = {}
             for i in self.fields:
                 if self.fields[i].get('type') == 'file':
-                    data[i] = SimpleUploadedFile(name=str(URI(str(data[i])).path).split('/')[-1], content=urlopen(url=str(data.get(i))).read())
+                    instanceData[i] = SimpleUploadedFile(name=str(URI(str(row[i])).path).split('/')[-1], content=urlopen(url=str(data.get(i))).read())
                 elif self.fields[i].get('type') == 'date' or self.fields[i].get('type') == 'datetime':
-                    data[i] = datetime.datetime.fromisoformat(data[i])
+                    instanceData[i] = datetime.datetime.fromisoformat(data[i])
                 elif self.fields[i].get('type') == 'foreign_key':
                     try:
-                        data[f'{i}__id'] = int(data.pop(i))
+                        instanceData[f'{i}__id'] = int(data.pop(i))
                     except ValueError:
-                        instance, _ = self.fields.get(i).get('classMap').objects.get_or_create(self.import_data())
-
+                        instance, _ = self.fields.get(i).get('classMap').objects.get_or_create(**json.loads(str(row.pop(i))))
+                else:
+                    instanceData[i] = str(row[i])
+            self.create(instanceData)
     def export_data(self):
         output = {}
         data = self.repository.list()

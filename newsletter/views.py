@@ -3,7 +3,7 @@ from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
-from .models import Subscription, InscriptionSerializer
+from .models import Subscription, SubscriptionSerializer
 from .services import delete_subscription
 
 
@@ -18,8 +18,8 @@ def create_inscription(request, *args, **kwargs):
 
 @api_view(['GET'])
 def get_subscriptions(request, *args, **kwargs):
-    return Response(data=[InscriptionSerializer(i).data for i in Subscription.objects.all()
-                          if InscriptionSerializer(i).is_valid()], status=HTTP_200_OK)
+    return Response(data=[SubscriptionSerializer(i).data for i in Subscription.objects.all()
+                          if SubscriptionSerializer(i).is_valid()], status=HTTP_200_OK)
 
 
 @api_view(['DELETE'])

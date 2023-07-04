@@ -9,4 +9,5 @@ class Inscription(models.Model):
 
 class News(models.Model):
 
-    subject = TextField()
+    subject = CharField(max_length=255, null=False)
+    description  = TextField()

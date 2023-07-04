@@ -10,7 +10,7 @@ class Subscription(Model):
     date_joined = DateTimeField(auto_now_add=True)
 
 
-class InscriptionSerializer(ModelSerializer):
+class SubscriptionSerializer(ModelSerializer):
 
     class Meta:
         model = Subscription
