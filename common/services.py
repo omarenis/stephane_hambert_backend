@@ -35,8 +35,11 @@ class Service(object):
     def list(self):
         return self.repository.list()
 
-    def retrieve(self, pk: int):
-        return self.repository.retrieve_by_id(pk=pk)
+    def retrieve(self, pk: int or str):
+        try:
+            return self.repository.retrieve_by_id(int(pk))
+        except TypeError:
+            return self.repository.retrieve({'slug': pk})
 
     def create(self, data: dict):
         self.verify_required_data(data)
