@@ -15,7 +15,13 @@ class Service(object):
             if data.get(i) is None and self.fields[i].get('required') is True:
                 raise ValueError(f'{i} must not be null')
             if self.fields.get(i).get('type') == 'foreign_key' and data.get(i) is not None:
-                data[f'{i}_id'] = data.pop (i)
+                data[f'{i}_id'] = data.pop(i)
+            elif self.fields.get('type') == 'many_to_many':
+                try:
+                    data[i] = Repository(model=self.fields.get('modelToMap')).retrieve_by_id(data[i])
+                except self.fields.get('modelToMap').DoesNotExist:
+                    raise ValueError(f'{i} with id = {data[i]} is not found')
+
             elif self.fields[i].get('type') == 'slug':
                 if self.fields[i].get('field_to_slug') is None:
                     raise ValueError('field to slug must be not None')
@@ -61,20 +67,24 @@ class Service(object):
 
     def import_data(self, data: list):
         for row in data:
-            instanceData = {}
+            instance_data = {}
             for i in self.fields:
                 if self.fields[i].get('type') == 'file':
-                    instanceData[i] = SimpleUploadedFile(name=str(URI(str(row[i])).path).split('/')[-1], content=urlopen(url=str(data.get(i))).read())
+                    instance_data[i] = SimpleUploadedFile(name=str(URI(str(row[i])).path).split('/')[-1],
+                                                          content=urlopen(url=str(data.get(i))).read())
                 elif self.fields[i].get('type') == 'date' or self.fields[i].get('type') == 'datetime':
-                    instanceData[i] = datetime.datetime.fromisoformat(data[i])
+                    instance_data[i] = datetime.datetime.fromisoformat(data[i])
                 elif self.fields[i].get('type') == 'foreign_key':
                     try:
-                        instanceData[f'{i}__id'] = int(data.pop(i))
+                        instance_data[f'{i}_id'] = int(data.pop(i))
                     except ValueError:
-                        instance, _ = self.fields.get(i).get('classMap').objects.get_or_create(**json.loads(str(row.pop(i))))
+                        instance, _ = self.fields.get(i).get('classMap').objects.get_or_create(**json.loads(str(
+                            row.pop(i))))
+                        instance_data[f'{i}_id'] = instance.id
                 else:
-                    instanceData[i] = str(row[i])
-            self.create(instanceData)
+                    instance_data[i] = str(row[i])
+            self.create(instance_data)
+
     def export_data(self):
         output = {}
         data = self.repository.list()
@@ -89,4 +99,3 @@ class Service(object):
                         value = str(getattr(getattr(data, field), 'url'))
                     else:
                         value = str(getattr(row, field))
-
