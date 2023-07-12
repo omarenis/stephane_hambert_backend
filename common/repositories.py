@@ -3,8 +3,9 @@ from django.db.models import Model
 
 
 class Repository(object):
-    def __init__(self, model: Model or AbstractUser):
+    def __init__(self, model: Model or AbstractUser, database='default'):
         self.model = model
+        self.database = database
 
     def list(self):
         return self.model.objects.all()
