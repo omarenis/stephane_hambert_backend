@@ -106,8 +106,8 @@ class ViewSet(ModelViewSet):
             return Response(data={'error': str(deleted)}, status=HTTP_404_NOT_FOUND)
         return Response(status=HTTP_204_NO_CONTENT)
 
-    def import_data(self, request, *args, **kwargs):
-        dataframe = pd.read_csv(io.StringIO(request.data.get('file_import').read().decode('utf-8')), delimiter=',')
+    # def import_data(self, request, *args, **kwargs):
+    #     dataframe = pd.read_csv(io.StringIO(request.data.get('file_import').read().decode('utf-8')), delimiter=',')
 
     @classmethod
     def get_urls(cls):

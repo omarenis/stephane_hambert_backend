@@ -20,9 +20,11 @@ class Product(Model):
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
+    history = TextField(null=False)
 
     def __str__(self):
         return self.slug
+
     class Meta:
         db_table = 'products'
 
@@ -35,6 +37,7 @@ class Category(Model):
 
     def __str__(self):
         return self.title
+
     class Meta:
         db_table = 'categories'
 
@@ -49,6 +52,7 @@ class Collection(Model):
 
     def __str__(self):
         return self.label
+
     class Meta:
         db_table = 'collections'
 
@@ -64,6 +68,7 @@ class Promo(Model):
 
     def __str__(self):
         return self.label
+
     class Meta:
         db_table = 'promos'
 
@@ -95,4 +100,4 @@ class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
-                  'ingredients', 'collection', 'promo', 'category', 'comment_set']
+                  'ingredients', 'collection', 'promo', 'category', 'comment_set', 'history']
