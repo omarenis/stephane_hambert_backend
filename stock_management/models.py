@@ -1,5 +1,5 @@
 from django.db.models import Model, CharField, FloatField, BigIntegerField, TextField, DateTimeField, ForeignKey, \
-    CASCADE, SET_NULL, ImageField, SlugField
+    CASCADE, SET_NULL, ImageField, SlugField, ManyToManyField
 from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
 from crm.models import CommentSerializer
 
@@ -16,7 +16,7 @@ class Product(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     ingredients = TextField(null=False)
     collection = ForeignKey(to='Collection', on_delete=SET_NULL, null=True)
-    category = ForeignKey(to='Category', on_delete=SET_NULL, null=True)
+    category = ManyToManyField(to='Category', on_delete=SET_NULL, null=True, blank=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
