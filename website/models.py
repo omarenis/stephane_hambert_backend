@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import TextField, EmailField, CharField, Model, ImageField, ForeignKey, CASCADE, FileField
+from django.db.models import TextField, EmailField, CharField, Model, ImageField, ForeignKey, CASCADE, FileField, \
+    OneToOneField
 
 PRODUCT_MODEL = 'stock_management.Product'
 
@@ -33,7 +34,7 @@ class History(models.Model):
     image = ImageField(upload_to='histories')
     description = TextField()
     title = CharField(max_length=255)
-    product = ForeignKey(to=PRODUCT_MODEL, on_delete=CASCADE)
+    product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
 
 class AdditionalFile(Model):
