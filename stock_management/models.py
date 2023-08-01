@@ -48,7 +48,7 @@ class Collection(Model):
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
-
+    citation = TextField(blank=True)
     def __str__(self):
         return self.label
 
@@ -90,6 +90,12 @@ class CategorySerializer(ModelSerializer):
         fields = '__all__'
 
 
+class ProductListSerializer(ModelSerializer):
+
+    class Meta:
+        model = Product
+
+
 class ProductSerializer(ModelSerializer):
     collection = CollectionSerializer(read_only=True)
     promo = PromoSerializer(read_only=True)
@@ -99,4 +105,4 @@ class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
-                  'ingredients', 'collection', 'promo', 'category', 'comment_set', 'history']
+                  'ingredients', 'collection', 'citation', 'promo', 'category', 'comment_set', 'history']

@@ -20,6 +20,10 @@ def index(request, *args, **kwargs):
     })
 
 
+@api_view(['GET'])
+def collections_page_controller():
+    collections = Collection.objects.all()
+
 
 urlpatterns = [
     path('index', index)

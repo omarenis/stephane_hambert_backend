@@ -2,6 +2,7 @@ from common.repositories import Repository
 from common.services import Service
 from website.models import OlfactiveProduct, History
 
+
 ADDITIONAL_INFORMATION = {
     'image': {'type': 'file', 'required': True},
     'description': {'type': 'text', 'required': True},
