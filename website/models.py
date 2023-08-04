@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models import TextField, EmailField, CharField, Model, ImageField, ForeignKey, CASCADE, FileField, \
     OneToOneField
 from rest_framework.serializers import ModelSerializer
-
 from stock_management.models import Product
 
 PRODUCT_MODEL = 'stock_management.Product'
@@ -19,18 +18,18 @@ class News(models.Model):
     description = TextField()
 
 
+class Olfaction(Model):
+    image = ImageField(upload_to='products/olfactions')
+    description = TextField()
+    title = CharField(max_length=255)
+    product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
+
+
 class AdditionalInformationCollection(Model):
     image = ImageField(upload_to='collections/additional_information')
     description = TextField()
     title = CharField(max_length=255)
     collection = ForeignKey(to='stock_management.Collection', on_delete=CASCADE)
-
-
-class AdditionalInformationProduct(Model):
-    image = ImageField(upload_to='histories')
-    description = TextField()
-    title = CharField(max_length=255)
-    product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
 
 class History(models.Model):
@@ -59,19 +58,11 @@ class AdditionalInformationCollectionSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class AdditionalInformationProductSerializer(ModelSerializer):
+class OlfactionSerializer(ModelSerializer):
 
     class Meta:
-
-        model = AdditionalInformationProduct
+        model = Olfaction
         fields = '__all__'
-
-
-class ProductPublicListSerializer(ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = ['id', '']
 
 
 class AdditionalFileSerializer(ModelSerializer):
@@ -81,10 +72,14 @@ class AdditionalFileSerializer(ModelSerializer):
         model = AdditionalFile
         fields = '__all__'
 
+
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()
     additional_file_set = AdditionalFileSerializer()
+    olfaction = OlfactionSerializer()
     class Meta:
 
         model = Product
-        fields = ['id', 'history']
+        fields = ['id', 'history', 'olfaction', 'history', 'additional_file_set', 'slug', 'id', 'description', 'price',
+                  'image', 'number_purchases']
+
