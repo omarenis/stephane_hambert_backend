@@ -1,7 +1,8 @@
-from django.db.models import Model, TextField, ForeignKey, SET_NULL, IntegerField, ImageField
+from django.db.models import Model, TextField, ForeignKey, SET_NULL, IntegerField, ImageField, CharField, \
+    BigIntegerField
 from rest_framework.serializers import ModelSerializer
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import FileField
+
 
 # Create your models here.
 class Localisation(Model):
@@ -11,9 +12,13 @@ class Localisation(Model):
     altitude = TextField()
     longitude = TextField()
 
+    class Meta:
+        db_table = 'localisations'
+        unique_together = (('country', 'city', 'zip_code'), )
+
 
 class Store(Model):
-    label = TextField()
+    label = CharField(null=False, unique=True)
     localisation = ForeignKey(to='Localisation', on_delete=SET_NULL, null=True)
     image = ImageField(upload_to='stores')
     number_products = IntegerField(null=False, default=0)
@@ -21,7 +26,6 @@ class Store(Model):
 
 
 class LocalisationSerializer(ModelSerializer):
-
     class Meta:
         model = Localisation
         fields = '__all__'
@@ -30,8 +34,8 @@ class LocalisationSerializer(ModelSerializer):
 class StoreSerializer(ModelSerializer):
     localisation = LocalisationSerializer(read_only=True)
     image = FileField()
-    class Meta:
 
+    class Meta:
         model = Store
         label = TextField()
         fields = ['id', 'label', 'image', 'number_products', 'promo']

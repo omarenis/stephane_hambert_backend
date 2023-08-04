@@ -82,4 +82,3 @@ class ProductPageModelSerializer(ModelSerializer):
         model = Product
         fields = ['id', 'history', 'olfaction', 'history', 'additional_file_set', 'slug', 'id', 'description', 'price',
                   'image', 'number_purchases']
-

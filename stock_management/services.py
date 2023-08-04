@@ -1,6 +1,7 @@
 from common.repositories import Repository
 from common.services import Service
 from stock_management.models import Product, Category, Promo, Collection
+from store_management.models import Store
 
 STATISTICS_FIELDS = {
     'number_products': {'type': 'int', 'required': False},
@@ -43,6 +44,11 @@ PRODUCT_FIELDS = {
 }
 
 
+QUANTITY_PRODUCT_STORE_FIELDS = {
+    'product': {'type': 'foreign_key', 'required': True, 'classMap': Product, 'fieldToGetBy': 'code'},
+    'store': {'type': 'foreign_key', 'required': True, 'classMap': Store, 'fieldToGetBy': 'code'}
+}
+
 class ProductService(Service):
 
     def __init__(self, repository=Repository(model=Product), fields=None):
@@ -51,6 +57,7 @@ class ProductService(Service):
         super().__init__(repository, fields)
 
     def create(self, data: dict):
+
         product = super().create(data)
         product.category.number_products += 1
         product.category.save()

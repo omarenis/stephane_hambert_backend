@@ -49,6 +49,7 @@ class Collection(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
     citation = TextField(blank=True)
+
     def __str__(self):
         return self.label
 
@@ -72,6 +73,12 @@ class Promo(Model):
         db_table = 'promos'
 
 
+class QuantityProduct(Model):
+    product = ForeignKey(to='Product', on_delete=SET_NULL, default=None)
+    store = ForeignKey(to='store_management.Store', on_delete=CASCADE)
+    quantity = BigIntegerField(default=0)
+
+
 class CollectionSerializer(ModelSerializer):
     class Meta:
         model = Collection
@@ -91,7 +98,6 @@ class CategorySerializer(ModelSerializer):
 
 
 class ProductListSerializer(ModelSerializer):
-
     class Meta:
         model = Product
 
