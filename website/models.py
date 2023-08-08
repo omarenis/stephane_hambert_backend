@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import TextField, EmailField, CharField, Model, ImageField, ForeignKey, CASCADE, FileField, \
     OneToOneField
 from rest_framework.serializers import ModelSerializer
-from stock_management.models import Product
+from stock_management.models import Product, Collection
 
 PRODUCT_MODEL = 'stock_management.Product'
 
@@ -45,40 +45,42 @@ class AdditionalFile(Model):
 
 
 class HistorySerializer(ModelSerializer):
-
     class Meta:
         model = History
         fields = '__all__'
 
 
 class AdditionalInformationCollectionSerializer(ModelSerializer):
-
     class Meta:
         model = AdditionalInformationCollection
         fields = '__all__'
 
 
 class OlfactionSerializer(ModelSerializer):
-
     class Meta:
         model = Olfaction
         fields = '__all__'
 
 
 class AdditionalFileSerializer(ModelSerializer):
-
     class Meta:
-
         model = AdditionalFile
         fields = '__all__'
 
+
+class CollectionSerializer(ModelSerializer):
+    additionalinformationcollection_set = AdditionalInformationCollectionSerializer()
+
+    class Meta:
+        model = Collection
+        fields = ['id', ]
 
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()
     additional_file_set = AdditionalFileSerializer()
     olfaction = OlfactionSerializer()
-    class Meta:
 
+    class Meta:
         model = Product
         fields = ['id', 'history', 'olfaction', 'history', 'additional_file_set', 'slug', 'id', 'description', 'price',
                   'image', 'number_purchases']

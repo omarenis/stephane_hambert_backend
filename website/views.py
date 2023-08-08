@@ -1,13 +1,11 @@
-from django.core.mail import send_mail
-from django.shortcuts import render
 from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST
-
+from common.views import ViewSet
 from stock_management.models import Product, Collection, ProductSerializer, CollectionSerializer
 from stock_management.services import CategoryService, ProductService
-from website.models import Inscription
+from website.models import Inscription, OlfactionSerializer, HistorySerializer
+from website.services import OlfactionService, HistoryService
 
 
 # Create your views here.
@@ -32,9 +30,32 @@ def products_page_controller(request, *args, **kwargs):
 @api_view(['GET'])
 def collections_page_controller():
     collections = Collection.objects.all()
+    collections_data = [CollectionSerializer()]
+    for i in collections:
+        collections_data
 
+
+class OlfactionViewSet(ViewSet):
+
+    def __init__(self, serializer_class=OlfactionSerializer, service=OlfactionService(), **kwargs):
+        super().__init__(serializer_class, service, **kwargs)
+
+
+class HistoryViewSet(ViewSet):
+
+    def __init__(self, serializer_class=HistorySerializer, service=HistoryService(), **kwargs):
+        super().__init__(serializer_class, service, **kwargs)
+
+
+olfactions, olfaction = OlfactionViewSet.get_urls()
+histories, history = HistoryViewSet.get_urls()
 
 urlpatterns = [
-    path('index', index),
-    path('products', products_page_controller)
+    path('public/index', index),
+    path('public/products', products_page_controller),
+    path('public/collections', collections_page_controller),
+    path('stock-management/olfactions', olfactions),
+    path('stock-management/olfactions/<int:pk>', olfaction),
+    path('stock-management/histories', olfactions),
+    path('stock-management/histories/<int:pk>', olfaction)
 ]

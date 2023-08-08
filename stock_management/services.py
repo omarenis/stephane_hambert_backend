@@ -14,11 +14,9 @@ COLLECTION_FIELDS = {
     'image': {'type': 'image', 'required': True}
 }
 
-
 CATEGORY_FIELDS = {
     'title': {'type': 'string', 'required': True, 'unique': True}
 }
-
 
 PROMO_FIELDS = {
     'label': {'type': 'string', 'required': True, 'unique': True},
@@ -43,11 +41,11 @@ PRODUCT_FIELDS = {
     'current_quantity': {'type': 'integer', 'required': True}
 }
 
-
 QUANTITY_PRODUCT_STORE_FIELDS = {
     'product': {'type': 'foreign_key', 'required': True, 'classMap': Product, 'fieldToGetBy': 'code'},
     'store': {'type': 'foreign_key', 'required': True, 'classMap': Store, 'fieldToGetBy': 'code'}
 }
+
 
 class ProductService(Service):
 

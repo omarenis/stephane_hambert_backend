@@ -18,17 +18,16 @@ ADDITIONAL_INFORMATION_COLLECTION = {
     'collection': {'type': 'one_to_one', 'required': True}
 }
 
-
 HISTORY_FIELDS = {
     **ADDITIONAL_INFORMATION,
     'product': {'type': 'one_to_one', 'required': True}
 }
 
-
 ADDITIONAL_FILE_FIELD = {
-    'image_or_video': {'type': 'file', 'required': True },
-    'product': {'type': 'foreign_key', 'required': True }
+    'image_or_video': {'type': 'file', 'required': True},
+    'product': {'type': 'foreign_key', 'required': True}
 }
+
 
 class OlfactionService(Service):
 
@@ -46,5 +45,5 @@ class HistoryService(Service):
 
 class AdditionAlFileService(Service):
 
-    def __init__(self, repository: Repository=Repository(model=AdditionalFile)):
+    def __init__(self, repository: Repository = Repository(model=AdditionalFile)):
         super().__init__(repository, fields=ADDITIONAL_FILE_FIELD)
