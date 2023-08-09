@@ -9,7 +9,7 @@ STATISTICS_FIELDS = {
     'total_gain': {'type': 'float', 'required': False}
 }
 COLLECTION_FIELDS = {
-    'label': {'type': 'string', 'required': True, 'unique': True},
+    'title': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
     'image': {'type': 'image', 'required': True}
 }
@@ -19,7 +19,7 @@ CATEGORY_FIELDS = {
 }
 
 PROMO_FIELDS = {
-    'label': {'type': 'string', 'required': True, 'unique': True},
+    'title': {'type': 'string', 'required': True, 'unique': True},
     'datetime_start': {'type': 'datetime', 'required': True},
     'datetime_end': {'type': 'datetime', 'required': True},
     'percentage': {'type': 'float', 'required': True}

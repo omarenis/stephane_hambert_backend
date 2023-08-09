@@ -16,7 +16,7 @@ class Product(Model):
     number_purchases = BigIntegerField(null=False, default=0)
     ingredients = TextField(null=False)
     collection = ForeignKey(to='Collection', on_delete=SET_NULL, null=True)
-    category = ManyToManyField(to='Category', on_delete=SET_NULL, null=True, blank=True)
+    category = ManyToManyField(to='Category',  null=True, blank=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
@@ -43,7 +43,7 @@ class Category(Model):
 
 class Collection(Model):
     image = ImageField(upload_to='mages/collections', null=False)
-    label = CharField(null=False, unique=True, max_length=255)
+    title = CharField(null=False, unique=True, max_length=255)
     description = TextField(null=False)
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
@@ -51,14 +51,14 @@ class Collection(Model):
     citation = TextField(blank=True)
 
     def __str__(self):
-        return self.label
+        return self.title
 
     class Meta:
         db_table = 'collections'
 
 
 class Promo(Model):
-    label = CharField(null=False, unique=True, max_length=255)
+    title = CharField(null=False, unique=True, max_length=255)
     datetime_start = DateTimeField(null=False)
     datetime_end = DateTimeField(null=False)
     percentage = FloatField(null=False)
@@ -67,16 +67,10 @@ class Promo(Model):
     total_gain = FloatField(null=False, default=0.0)
 
     def __str__(self):
-        return self.label
+        return self.title
 
     class Meta:
         db_table = 'promos'
-
-
-class QuantityProduct(Model):
-    product = ForeignKey(to='Product', on_delete=SET_NULL, default=None)
-    store = ForeignKey(to='store_management.Store', on_delete=CASCADE)
-    quantity = BigIntegerField(default=0)
 
 
 class CollectionSerializer(ModelSerializer):

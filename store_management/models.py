@@ -18,7 +18,7 @@ class Localisation(Model):
 
 
 class Store(Model):
-    label = CharField(null=False, unique=True)
+    label = CharField(null=False, unique=True, max_length=255)
     localisation = ForeignKey(to='Localisation', on_delete=SET_NULL, null=True)
     image = ImageField(upload_to='stores')
     number_products = IntegerField(null=False, default=0)
