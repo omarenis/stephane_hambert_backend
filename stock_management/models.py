@@ -44,7 +44,7 @@ class Category(Model):
 class Collection(Model):
     image = ImageField(upload_to='mages/collections', null=False)
     title = CharField(null=False, unique=True, max_length=255)
-    description = TextField(null=False)
+    content = TextField(null=False)
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)

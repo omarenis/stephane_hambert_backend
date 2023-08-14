@@ -10,7 +10,7 @@ STATISTICS_FIELDS = {
 }
 COLLECTION_FIELDS = {
     'title': {'type': 'string', 'required': True, 'unique': True},
-    'description': {'type': 'string', 'required': True},
+    'content': {'type': 'string', 'required': True},
     'image': {'type': 'image', 'required': True}
 }
 

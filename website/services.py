@@ -4,7 +4,7 @@ from website.models import History, Olfaction, AdditionalFile
 
 ADDITIONAL_INFORMATION = {
     'image': {'type': 'file', 'required': True},
-    'description': {'type': 'text', 'required': True},
+    'content': {'type': 'text', 'required': True},
     'title': {'type': 'text', 'required': True},
 }
 
@@ -15,7 +15,7 @@ ADDITIONAL_INFORMATION_PRODUCT = {
 
 ADDITIONAL_INFORMATION_COLLECTION = {
     **ADDITIONAL_INFORMATION,
-    'collection': {'type': 'one_to_one', 'required': True}
+    'collection': {'type': 'foreign_key', 'required': True}
 }
 
 HISTORY_FIELDS = {
