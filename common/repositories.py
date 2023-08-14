@@ -1,5 +1,7 @@
+import os
+
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Model
+from django.db.models import Model, FileField
 
 
 class Repository(object):
@@ -37,6 +39,13 @@ class Repository(object):
         return self.model.objects.create(**data)
 
     def delete(self, pk):
+        instance = self.model.objects.get(pk=pk)
+        if instance is not None:
+            for field in getattr(instance, '_meta').get_fields(include_parents=False):
+                if isinstance(field, FileField):
+                    path = getattr(instance, field.name).path
+                    if os.path.exists(path):
+                        os.remove(path)
         return self.model.objects.get(pk=pk).delete()
 
     def filter_by(self, data: dict, start=0, end=None, order_by=None):

@@ -3,6 +3,8 @@ import json
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.utils.text import slugify
 from uri import URI
 from urllib.request import urlopen

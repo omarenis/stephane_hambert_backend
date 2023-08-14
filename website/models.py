@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import TextField, EmailField, CharField, Model, ImageField, ForeignKey, CASCADE, FileField, \
     OneToOneField
 from rest_framework.serializers import ModelSerializer
-from stock_management.models import Product, Collection
+from stock_management.models import Product, Collection, CategorySerializer, PromoSerializer
 
 PRODUCT_MODEL = 'stock_management.Product'
 
@@ -27,7 +27,7 @@ class Olfaction(Model):
 
 class AdditionalInformationCollection(Model):
     image = ImageField(upload_to='collections/additional_information')
-    description = TextField()
+    content = TextField()
     title = CharField(max_length=255)
     collection = ForeignKey(to='stock_management.Collection', on_delete=CASCADE)
 
@@ -73,7 +73,14 @@ class CollectionSerializer(ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ['id', ]
+        fields = ['id', 'image', 'title', 'citation', 'additionalinformationcollection_set']
+
+class ProductListSerializer(ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    promo = PromoSerializer(read_only=True)
+    class Meta:
+        model  = Product
+        fields = ['slug', 'title', 'price', 'category', 'promo']
 
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()
