@@ -20,7 +20,7 @@ class News(models.Model):
 
 class Olfaction(Model):
     image = ImageField(upload_to='products/olfactions')
-    description = TextField()
+    content  = TextField()
     title = CharField(max_length=255)
     product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
@@ -34,7 +34,7 @@ class AdditionalInformationCollection(Model):
 
 class History(models.Model):
     image = ImageField(upload_to='products/histories')
-    description = TextField()
+    content = TextField()
     title = CharField(max_length=255)
     product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
