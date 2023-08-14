@@ -5,7 +5,7 @@ db.sqlite3
 *.pyc
 .idea
 */__pycache__/
-
+*/__pycache__/*
 local_settings.py
 db.sqlite3-journal
 media
