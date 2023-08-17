@@ -1,8 +1,6 @@
 from django.db.models import Model, CharField, FloatField, BigIntegerField, TextField, DateTimeField, ForeignKey, \
-    CASCADE, SET_NULL, ImageField, SlugField, ManyToManyField
-from rest_framework.serializers import ModelSerializer, ImageField as ImageFieldSerializer
-from crm.models import CommentSerializer
-
+    SET_NULL, ImageField, SlugField, ManyToManyField
+from rest_framework.serializers import ModelSerializer
 
 # Create your models here.
 class Product(Model):
@@ -15,7 +13,7 @@ class Product(Model):
     image = ImageField(upload_to='images/products', null=False)
     number_purchases = BigIntegerField(null=False, default=0)
     collection = ForeignKey(to='Collection', on_delete=SET_NULL, null=True, blank=True)
-    category_set = ManyToManyField(to='Category', null=True, blank=True)
+    category_set = ManyToManyField(to='Category', blank=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
     slug = SlugField(null=False)
@@ -56,7 +54,7 @@ class Collection(Model):
 
 
 class Promo(Model):
-    label = CharField(null=False, unique=True, max_length=255)
+    title = CharField(null=False, unique=True, max_length=255)
     datetime_start = DateTimeField(null=False)
     datetime_end = DateTimeField(null=False)
     percentage = FloatField(null=False)
@@ -65,7 +63,7 @@ class Promo(Model):
     total_gain = FloatField(null=False, default=0.0)
 
     def __str__(self):
-        return self.label
+        return self.title
 
     class Meta:
         db_table = 'promos'
@@ -90,15 +88,17 @@ class CategorySerializer(ModelSerializer):
 
 
 class ProductListSerializer(ModelSerializer):
+    collection = CollectionSerializer(read_only=True)
+    promo = PromoSerializer(read_only=True)
     class Meta:
         model = Product
+        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
+                  'collection', 'citation', 'promo', 'comment_set']
 
 
 class ProductSerializer(ModelSerializer):
     collection = CollectionSerializer(read_only=True)
     promo = PromoSerializer(read_only=True)
-    category_set = CategorySerializer(read_only=True)
-    comment_set = CommentSerializer(read_only=True)
 
     class Meta:
         model = Product
