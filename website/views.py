@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from common.views import ViewSet
 from stock_management.models import Product, Collection, ProductSerializer, CollectionSerializer
 from stock_management.services import CategoryService, ProductService
-from website.models import Inscription, OlfactionSerializer, HistorySerializer
+from website.models import OlfactionSerializer, HistorySerializer
 from website.services import OlfactionService, HistoryService
 
 
@@ -23,9 +23,15 @@ def index(request, *args, **kwargs):
 def products_page_controller(request, *args, **kwargs):
     categories = [{"id": i.id, 'label': i.label} for i in CategoryService().list()]
     products = [{
-        "slug": product.slug
+        "slug": product.slug,
+        "title": product.title,
+        "price": product.price,
+        "collection": product.collection
     } for product in ProductService().list()]
-
+    return Response(data={
+        "products": products,
+        "categories": categories
+    })
 
 @api_view(['GET'])
 def collections_page_controller():

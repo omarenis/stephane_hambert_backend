@@ -13,6 +13,10 @@ class Inscription(models.Model):
     email = EmailField(null=False)
 
 
+class Notification(Model):
+
+    product = ForeignKey(to='stock_management.Product', on_delete=CASCADE, null=False)
+    customer = ForeignKey(to='crm.CustomerProfile', on_delete=CASCADE, null=False)
 class News(models.Model):
     subject = CharField(max_length=255, null=False)
     description = TextField()
