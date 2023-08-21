@@ -16,7 +16,7 @@ class Product(Model):
     category_set = ManyToManyField(to='Category', blank=True)
     promo = ForeignKey(to='Promo', on_delete=SET_NULL, null=True)
     updated_at = DateTimeField(auto_now_add=True)
-    slug = SlugField(null=False)
+    slug = SlugField(null=False, default='')
 
     def __str__(self):
         return self.slug
