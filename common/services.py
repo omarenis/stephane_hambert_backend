@@ -57,7 +57,7 @@ class Service(object):
         return self.repository.list()
 
     def retrieve(self, pk: int):
-        return self.repository.retrieve(_id=pk)
+        return self.repository.retrieve_by_id(pk)
 
     def create(self, data: dict):
         print(data)

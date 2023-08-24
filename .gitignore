@@ -79,5 +79,5 @@ dmypy.json
 .pyre/
 .pytype/
 cython_debug/
-*/migrations/**.py
+*/migrations/*.py
 !*/migrations/__init__.py
