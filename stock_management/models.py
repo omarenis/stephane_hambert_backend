@@ -55,6 +55,7 @@ class Collection(Model):
 
 class Promo(Model):
     title = CharField(null=False, unique=True, max_length=255)
+    code = CharField(null=False, unique=True, max_length=255)
     datetime_start = DateTimeField(null=False)
     datetime_end = DateTimeField(null=False)
     percentage = FloatField(null=False)

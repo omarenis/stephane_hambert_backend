@@ -1,7 +1,8 @@
 import os
 
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Model, FileField
+from django.db.models import Model, FileField, ImageField
+from django.db.models.fields.files import FieldFile
 
 
 class Repository(object):
@@ -27,13 +28,21 @@ class Repository(object):
             return Exception('object not found')
         else:
             for i in data:
-                if hasattr(_object, i) and getattr(_object, i) != data[i]:
+                if hasattr(_object, i):
+                    if isinstance(getattr(_object, i), FieldFile) or issubclass(getattr(_object, i).__class__, FieldFile):
+                        self.delete_file_from_object(file_field=getattr(_object, i))
                     setattr(_object, i, data[i])
             if data.get('password') is not None and isinstance(_object, AbstractUser) or \
                     issubclass(_object.__class__, AbstractUser):
                 _object.set_password(data.get('password'))
             _object.save()
         return _object
+
+    @staticmethod
+    def delete_file_from_object(file_field: FieldFile):
+        path = file_field.path
+        if os.path.exists(path):
+            os.remove(path=path)
 
     def create(self, data: dict):
         return self.model.objects.create(**data)
@@ -43,9 +52,7 @@ class Repository(object):
         if instance is not None:
             for field in getattr(instance, '_meta').get_fields(include_parents=False):
                 if isinstance(field, FileField):
-                    path = getattr(instance, field.name).path
-                    if os.path.exists(path):
-                        os.remove(path)
+                    self.delete_file_from_object(instance=instance, file_field=field)
         return self.model.objects.get(pk=pk).delete()
 
     def filter_by(self, data: dict, start=0, end=None, order_by=None):

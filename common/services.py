@@ -60,7 +60,6 @@ class Service(object):
         return self.repository.retrieve_by_id(pk)
 
     def create(self, data: dict):
-        print(data)
         data = self.verify_required_data(data)
         return self.repository.create(data)
 

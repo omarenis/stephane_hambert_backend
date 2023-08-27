@@ -20,6 +20,7 @@ CATEGORY_FIELDS = {
 
 PROMO_FIELDS = {
     'title': {'type': 'string', 'required': True, 'unique': True},
+    'code': {'type': 'string', 'required': True, 'unique': True},
     'datetime_start': {'type': 'datetime', 'required': True},
     'datetime_end': {'type': 'datetime', 'required': True},
     'percentage': {'type': 'float', 'required': True}
@@ -104,3 +105,4 @@ class PromoService(Service):
         if fields is None:
             fields = PROMO_FIELDS
         super().__init__(repository, fields)
+

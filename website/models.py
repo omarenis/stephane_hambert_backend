@@ -77,7 +77,7 @@ class CollectionSerializer(ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ['id', 'image', 'title', 'citation', 'additionalinformationcollection_set']
+        fields = ['id', 'image', 'title', 'citation', 'content', 'additionalinformationcollection_set']
 
 class ProductListSerializer(ModelSerializer):
     category = CategorySerializer(read_only=True)

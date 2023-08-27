@@ -1,6 +1,7 @@
 from common.repositories import Repository
 from common.services import Service
-from website.models import History, Olfaction, AdditionalFile
+from stock_management.models import Collection
+from website.models import History, Olfaction, AdditionalFile, AdditionalInformationCollection
 
 ADDITIONAL_INFORMATION = {
     'image': {'type': 'file', 'required': True},
@@ -13,11 +14,6 @@ ADDITIONAL_INFORMATION_PRODUCT = {
     'product': {'type': 'one_to_one', 'required': True}
 }
 
-ADDITIONAL_INFORMATION_COLLECTION = {
-    **ADDITIONAL_INFORMATION,
-    'collection': {'type': 'foreign_key', 'required': True}
-}
-
 HISTORY_FIELDS = {
     **ADDITIONAL_INFORMATION,
     'product': {'type': 'one_to_one', 'required': True}
@@ -28,6 +24,13 @@ ADDITIONAL_FILE_FIELD = {
     'product': {'type': 'foreign_key', 'required': True}
 }
 
+
+OTHER_INFORMATION_FOR_COLLECTION = {
+    'title': {'type': 'string', 'required': True, 'unique': True},
+    'content': {'type': 'string', 'required': True},
+    'image': {'type': 'image', 'required': True},
+    'collection': {'type': 'foreign_key', 'required': True, 'classMap': Collection}
+}
 
 class OlfactionService(Service):
 
@@ -47,3 +50,9 @@ class AdditionAlFileService(Service):
 
     def __init__(self, repository: Repository = Repository(model=AdditionalFile)):
         super().__init__(repository, fields=ADDITIONAL_FILE_FIELD)
+
+
+class OtherInformationForCollectionService(Service):
+
+    def __init__(self, repository: Repository = Repository(model=AdditionalInformationCollection)):
+        super().__init__(repository, fields=OTHER_INFORMATION_FOR_COLLECTION)
