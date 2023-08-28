@@ -6,15 +6,17 @@ from rest_framework.serializers import ModelSerializer
 
 
 class CustomerProfile(Model):
-    facebook = URLField(null=True)
-    google = URLField(null=True)
+    facebook = URLField(blank=True)
+    google = URLField(blank=True)
+    INSTAGRAM = URLField(blank=True)
     phone = CharField(max_length=25)
     gender = TextField(null=False, choices=(('male', 'male'), ('female', 'female')))
     has_two_factors_authentication = BooleanField(null=False, default=False)
     user = OneToOneField(to=User, on_delete=CASCADE, null=False)
     number_purchases = BigIntegerField(null=False, default=0)
     total_sales = FloatField(null=False, default=0.0)
-
+    is_banned = BooleanField(null=False, default=False)
+    address = TextField(blank=True)
     class Meta:
         db_table = 'customers'
 

@@ -48,8 +48,13 @@ def login(data: dict):
         pass
     try:
         user = User.objects.get(**data)
-        if user.check_password(password):
-            return user
+        if user.check_password(password) is True:
+            if user.is_superuser is True:
+                return user
+            elif user.is_active is True and user.customerprofile.is_banned is True:
+                raise ValueError('the admin has banned your account please contact them')
+            elif not user.is_active:
+                raise ValueError('your account is not activated contact th administrator to activate it')
         raise ValueError('password did not match')
     except User.DoesNotExist:
         raise User.DoesNotExist('user with username or email not found')
@@ -61,6 +66,11 @@ def signup(data: dict):
         user = CustomerService().create(data=data)
         send_code(user.email)
     else:
+        if not user.is_active:
+            user.is_active = True
+            user.set_password(data['password'])
+            user.save()
+            return
         raise ValueError('user with username or email exists')
     return user
 

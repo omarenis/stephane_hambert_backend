@@ -9,7 +9,6 @@ class Product(Model):
     description = TextField(null=False)
     price = FloatField(null=False)
     current_quantity = BigIntegerField(null=False, default=1)
-    tva = FloatField(null=False)
     image = ImageField(upload_to='images/products', null=False)
     number_purchases = BigIntegerField(null=False, default=0)
     collection = ForeignKey(to='Collection', on_delete=SET_NULL, null=True, blank=True)
@@ -93,8 +92,8 @@ class ProductListSerializer(ModelSerializer):
     promo = PromoSerializer(read_only=True)
     class Meta:
         model = Product
-        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
-                  'collection', 'citation', 'promo', 'comment_set']
+        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'image', 'number_purchases',
+                  'collection', 'promo']
 
 
 class ProductSerializer(ModelSerializer):
@@ -103,5 +102,5 @@ class ProductSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'tva', 'image', 'number_purchases',
-                  'ingredients', 'collection', 'citation', 'promo', 'category', 'comment_set', 'history']
+        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'image', 'number_purchases',
+                  'collection', 'promo', 'comment_set']

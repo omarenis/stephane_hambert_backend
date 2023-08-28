@@ -1,12 +1,13 @@
 from django.urls import path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
 from common.views import ViewSet
 from stock_management.models import Product, Collection, ProductSerializer, CollectionSerializer
-from stock_management.services import CategoryService, ProductService
-from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer
+from stock_management.services import CategoryService, ProductService, CollectionService
+from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer, \
+    ProductPageModelSerializer, ProductListSerializer
 from website.services import OlfactionService, HistoryService, OtherInformationForCollectionService
 
 
@@ -23,19 +24,25 @@ def index(request, *args, **kwargs):
 
 @api_view(['GET'])
 def products_page_controller(request, *args, **kwargs):
-    categories = [{"id": i.id, 'label': i.label} for i in CategoryService().list()]
-    products = [{
-        "slug": product.slug,
-        "title": product.title,
-        "price": product.price,
-        "collection": product.collection
-    } for product in ProductService().list()]
+    filter_products = {}
+    print(request.GET.get('collection'))
+    if request.GET.get('collection') is not None:
+        filter_products = {'collection': int(request.GET.get('collection'))}
+    print(ProductService().filter_by(filter_products))
+    collections = [{"id": i.id, 'title': i.title} for i in CollectionService().list()]
+    products = [ProductListSerializer(product).data for product in (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
+    print(products);
     return Response(data={
         "products": products,
-        "categories": categories
+        "collections": collections
     })
 
-
+@api_view(['GET'])
+def product_page_controller(request, slug: str, *args, **kwargs):
+    product = ProductService().retrieve_by({'slug': slug})
+    if product is None:
+        return Response(data={'message': 'product not found'}, status=HTTP_404_NOT_FOUND)
+    return Response(data=ProductPageModelSerializer(product).data, status=HTTP_200_OK)
 @api_view(['GET'])
 def collections_page_controller():
     collections = Collection.objects.all()
@@ -68,6 +75,7 @@ urlpatterns = [
     path('public/index', index),
     path('public/products', products_page_controller),
     path('public/collections', collections_page_controller),
+    path('public/products/<str:slug>', product_page_controller),
     path('stock-management/other-information-for-collection', other_information_for_collection),
     path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection),
     path('stock-management/olfactions', olfactions),

@@ -15,11 +15,13 @@ class Service(object):
 
     def verify_required_data(self, data: dict):
         for i in self.fields:
-            if data.get(i) is None and self.fields[i].get('required') is True:
+            if data.get(i) is None and self.fields[i].get('required') is True and self.fields[i].get('type') != 'slug':
                 raise ValueError(f'{i} must not be null')
             if self.fields.get(i).get('type') == 'foreign_key' and data.get(i) is not None:
-                print(data)
-                data[i] = self.fields.get(i).get('classMap').objects.get(id=data[i])
+                if data[i] == '':
+                    data[i] = None
+                else:
+                    data[i] = self.fields.get(i).get('classMap').objects.get(id=int(data[i]))
             elif self.fields[i].get('type') == 'slug':
                 if self.fields[i].get('field_to_slug') is None:
                     raise ValueError('field to slug must be not None')
@@ -34,7 +36,6 @@ class Service(object):
 
     def verify_data(self, data: dict):
         raw = {}
-
         for i in data:
             if self.fields.get(i) is None:
                 raise AttributeError(f'{i} is not an attribute on the model')
@@ -42,7 +43,8 @@ class Service(object):
                 if self.fields.get(i).get('type') == 'foreign_key':
                     model = self.fields.get(i).get('classMap')
                     try:
-                        raw[i] = model.objects.get(id=data[i])
+                        if data.get(i) is not None and data.get(i) != 'null':
+                            raw[i] = model.objects.get(id=data[i])
                     except model.DoesNotExist:
                         raise ObjectDoesNotExist(f'{i} with id = {data[i]} does not exist')
                 else:
@@ -56,8 +58,11 @@ class Service(object):
     def list(self):
         return self.repository.list()
 
-    def retrieve(self, pk: int):
+    def retrieve_by_id(self, pk: int):
         return self.repository.retrieve_by_id(pk)
+
+    def retrieve_by(self, data: dict):
+        return self.repository.retrieve(data)
 
     def create(self, data: dict):
         data = self.verify_required_data(data)

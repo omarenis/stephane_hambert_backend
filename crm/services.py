@@ -17,7 +17,8 @@ CUSTOMER_FIELDS = {
     'facebook': {'type': 'string', 'required': False},
     'google': {'type': 'string', 'required': False},
     'phone': {'type': 'string', 'required': True},
-    'gender': {'type': 'text', 'required': True}
+    'gender': {'type': 'text', 'required': True},
+    'address': {'type': 'text', 'required': False}
 }
 
 
@@ -37,23 +38,26 @@ class CustomerService(Service):
             raise ValueError('user found with given username')
         except User.DoesNotExist:
             try:
-                User.objects.get(email=data.get('email'))
-                raise ValueError('user found with given email')
+                user = User.objects.get(email=data.get('email'))
+                if not user.is_active:
+                    raise ValueError('user found with given email')
             except User.DoesNotExist:
                 self.verify_required_data(data)
-                user = User.objects.create(
+                user = User(
                     username=data.get('username'),
                     first_name=data.get('first_name'),
                     last_name=data.get('last_name'),
-                    email=data.get('email')
+                    email=data.get('email'),
+                    is_active=True
                 )
-                user.set_password(raw_password=data.get('password'))
-                user.save()
-                self.customer_repository.create({
+            user.set_password(raw_password=data.get('password'))
+            user.save()
+            self.customer_repository.create({
                     'user': user,
                     'facebook': data.get('facebook'),
                     'google': data.get('google'),
                     'phone': data.get('phone'),
-                    'gender': data.get('gender')
-                })
-                return user
+                    'gender': data.get('gender'),
+                    'address': data.get('address')
+            })
+            return user

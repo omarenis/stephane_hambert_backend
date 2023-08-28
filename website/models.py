@@ -80,18 +80,17 @@ class CollectionSerializer(ModelSerializer):
         fields = ['id', 'image', 'title', 'citation', 'content', 'additionalinformationcollection_set']
 
 class ProductListSerializer(ModelSerializer):
-    category = CategorySerializer(read_only=True)
     promo = PromoSerializer(read_only=True)
     class Meta:
         model  = Product
-        fields = ['slug', 'title', 'price', 'category', 'promo']
+        fields = ['slug', 'title', 'price', 'image', 'promo']
 
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()
-    additional_file_set = AdditionalFileSerializer()
+    additionalfile_set = AdditionalFileSerializer(read_only=True, many=True, allow_null=True)
     olfaction = OlfactionSerializer()
 
     class Meta:
         model = Product
-        fields = ['id', 'history', 'olfaction', 'history', 'additional_file_set', 'slug', 'id', 'description', 'price',
-                  'image', 'number_purchases']
+        fields = ['id', 'history', 'olfaction', 'history', 'additionalfile_set', 'slug', 'id', 'description', 'price',
+                  'image']

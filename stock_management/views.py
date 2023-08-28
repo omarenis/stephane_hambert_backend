@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import path
 
 from common.views import ViewSet
-from stock_management.models import ProductSerializer, CategorySerializer, PromoSerializer, CollectionSerializer
+from stock_management.models import ProductSerializer, CategorySerializer, PromoSerializer, CollectionSerializer, \
+    ProductListSerializer
 from stock_management.services import ProductService, PromoService, CategoryService, CollectionService
 
 
@@ -12,6 +13,9 @@ class ProductViewSet(ViewSet):
     def __init__(self, serializer_class=ProductSerializer, service=ProductService(), **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
+    def list(self, request, *args, **kwargs):
+        self.serializer_class = ProductListSerializer
+        return super().list(request)
 
 class CollectionViewSet(ViewSet):
 

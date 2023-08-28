@@ -34,12 +34,11 @@ PRODUCT_FIELDS = {
     'code': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
     'price': {'type': 'float', 'required': True},
-    'tva': {"type": 'float', 'required': True},
     'image': {'type': 'file', 'required': True},
-    'ingredients': {'type': 'text', 'required': True},
-    'category': {'type': 'foreign_key', 'required': True, 'classMap': Category, 'fieldsClassMap': CATEGORY_FIELDS},
-    'promo': {'type': 'foreign_key', 'required': False},
-    'current_quantity': {'type': 'integer', 'required': True}
+    'promo': {'type': 'foreign_key', 'required': False, 'classMap': Promo},
+    'current_quantity': {'type': 'integer', 'required': True},
+    'collection': {'type': 'foreign_key', 'required': True, 'classMap': Collection},
+    'slug': {'type': 'slug', 'required': True, 'field_to_slug': 'title'}
 }
 
 QUANTITY_PRODUCT_STORE_FIELDS = {
@@ -58,14 +57,15 @@ class ProductService(Service):
     def create(self, data: dict):
 
         product = super().create(data)
-        product.category.number_products += 1
-        product.category.save()
         product.collection.number_products += 1
         product.collection.save()
 
         if product.promo is not None:
             product.promo.number_products += 1
             product.promo.save()
+        for category in product.category_set.all():
+                category.number_products += 1
+                category.save()
         return product
 
     def delete(self, pk: int):
@@ -105,4 +105,3 @@ class PromoService(Service):
         if fields is None:
             fields = PROMO_FIELDS
         super().__init__(repository, fields)
-
