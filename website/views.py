@@ -17,17 +17,15 @@ from website.services import OlfactionService, HistoryService, OtherInformationF
 @api_view(['GET'])
 def index(request, *args, **kwargs):
     data = {
-        'products': None,
-        'collections': None,
-        'presents': None
+        'products': [],
+        'collections': [],
+        'presents': []
     }
-    products = None
-    presents = None
     if request.GET.get('products') is None and request.GET.get('presents') is None:
         data['collections'] = Collection.objects.all()
 
     elif request.GET.get('product') == 'best_sellers':
-        products = Product.objects.order_by('-number_purchases')
+        data['products'] = Product.objects.order_by('-number_purchases')
     else:
         data['products'] = Product.objects.all()
 
@@ -36,7 +34,8 @@ def index(request, *args, **kwargs):
 
     return Response(data={
         "products": [ProductListSerializer(product).data for product in data['products']],
-        "collections": [CollectionSerializer(collection).data for collection in data['presents']]
+        "collections": [CollectionSerializer(collection).data for collection in data['presents']],
+        "presents": [PresentSerializer(present).data for present in data['presents']]
     })
 
 
@@ -50,7 +49,6 @@ def products_page_controller(request, *args, **kwargs):
     collections = [{"id": i.id, 'title': i.title} for i in CollectionService().list()]
     products = [ProductListSerializer(product).data for product in
                 (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
-    print(products);
     return Response(data={
         "products": products,
         "collections": collections
