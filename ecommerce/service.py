@@ -1,6 +1,6 @@
 from common.repositories import Repository
 from common.services import Service
-from ecommerce.models import Order
+from ecommerce.models import Order, OrderLine
 
 ORDER_FIELDS = {
     'customer': {'type': 'foreign_key', 'required': True},
@@ -26,3 +26,5 @@ class OrderService(Service):
         if fields is None:
             fields = ORDER_FIELDS
         super().__init__(repository, fields)
+        self.order_line_repository = Repository(model=OrderLine)
+

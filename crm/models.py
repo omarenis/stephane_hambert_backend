@@ -6,9 +6,9 @@ from rest_framework.serializers import ModelSerializer
 
 
 class CustomerProfile(Model):
-    facebook = URLField(blank=True)
-    google = URLField(blank=True)
-    INSTAGRAM = URLField(blank=True)
+    facebook = URLField(blank=True, null=True)
+    google = URLField(blank=True, null=True)
+    instagram = URLField(blank=True, null=True)
     phone = CharField(max_length=25)
     gender = TextField(null=False, choices=(('male', 'male'), ('female', 'female')))
     has_two_factors_authentication = BooleanField(null=False, default=False)

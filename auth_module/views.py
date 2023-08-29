@@ -71,6 +71,7 @@ def signup_view(request, *args, **kwargs):
         return Response(status=HTTP_201_CREATED, data={})
     except Exception as exception:
         if isinstance(exception, ValueError):
+            print(exception)
             return Response(data={'message': 'account already found'}, status=HTTP_400_BAD_REQUEST)
         return Response(data={'message': str(exception)}, status=HTTP_500_INTERNAL_SERVER_ERROR)
 

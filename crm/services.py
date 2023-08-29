@@ -42,7 +42,6 @@ class CustomerService(Service):
                 if not user.is_active:
                     raise ValueError('user found with given email')
             except User.DoesNotExist:
-                self.verify_required_data(data)
                 user = User(
                     username=data.get('username'),
                     first_name=data.get('first_name'),
