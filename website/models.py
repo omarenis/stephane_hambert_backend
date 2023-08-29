@@ -14,9 +14,10 @@ class Inscription(models.Model):
 
 
 class Notification(Model):
-
     product = ForeignKey(to='stock_management.Product', on_delete=CASCADE, null=False)
     customer = ForeignKey(to='crm.CustomerProfile', on_delete=CASCADE, null=False)
+
+
 class News(models.Model):
     subject = CharField(max_length=255, null=False)
     description = TextField()
@@ -24,7 +25,7 @@ class News(models.Model):
 
 class Olfaction(Model):
     image = ImageField(upload_to='products/olfactions')
-    content  = TextField()
+    content = TextField()
     title = CharField(max_length=255)
     product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
@@ -79,11 +80,14 @@ class CollectionSerializer(ModelSerializer):
         model = Collection
         fields = ['id', 'image', 'title', 'citation', 'content', 'additionalinformationcollection_set']
 
+
 class ProductListSerializer(ModelSerializer):
     promo = PromoSerializer(read_only=True)
+
     class Meta:
-        model  = Product
+        model = Product
         fields = ['slug', 'title', 'price', 'image', 'promo']
+
 
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()

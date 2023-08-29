@@ -30,12 +30,14 @@ def products_page_controller(request, *args, **kwargs):
         filter_products = {'collection': int(request.GET.get('collection'))}
     print(ProductService().filter_by(filter_products))
     collections = [{"id": i.id, 'title': i.title} for i in CollectionService().list()]
-    products = [ProductListSerializer(product).data for product in (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
+    products = [ProductListSerializer(product).data for product in
+                (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
     print(products);
     return Response(data={
         "products": products,
         "collections": collections
     })
+
 
 @api_view(['GET'])
 def product_page_controller(request, slug: str, *args, **kwargs):
@@ -43,11 +45,14 @@ def product_page_controller(request, slug: str, *args, **kwargs):
     if product is None:
         return Response(data={'message': 'product not found'}, status=HTTP_404_NOT_FOUND)
     return Response(data=ProductPageModelSerializer(product).data, status=HTTP_200_OK)
+
+
 @api_view(['GET'])
 def collections_page_controller():
     collections = Collection.objects.all()
-    collections_data = [CollectionSerializer(collection).data for  collection in collections]
+    collections_data = [CollectionSerializer(collection).data for collection in collections]
     return Response(data=collections_data, status=HTTP_200_OK)
+
 
 class OlfactionViewSet(ViewSet):
 
@@ -63,7 +68,8 @@ class HistoryViewSet(ViewSet):
 
 class OtherInformationCollectionViewSet(ViewSet):
 
-    def __init__(self, serializer_class=AdditionalInformationCollectionSerializer, service=OtherInformationForCollectionService(), **kwargs):
+    def __init__(self, serializer_class=AdditionalInformationCollectionSerializer,
+                 service=OtherInformationForCollectionService(), **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
 
@@ -80,6 +86,6 @@ urlpatterns = [
     path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection),
     path('stock-management/olfactions', olfactions),
     path('stock-management/olfactions/<int:pk>', olfaction),
-    path('stock-management/histories', olfactions),
-    path('stock-management/histories/<int:pk>', olfaction)
+    path('stock-management/histories', histories),
+    path('stock-management/histories/<int:pk>', history)
 ]

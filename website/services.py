@@ -1,6 +1,6 @@
 from common.repositories import Repository
 from common.services import Service
-from stock_management.models import Collection
+from stock_management.models import Collection, Product
 from website.models import History, Olfaction, AdditionalFile, AdditionalInformationCollection
 
 ADDITIONAL_INFORMATION = {
@@ -9,21 +9,25 @@ ADDITIONAL_INFORMATION = {
     'title': {'type': 'text', 'required': True},
 }
 
+OLFACTION_FIELDS = {
+    **ADDITIONAL_INFORMATION,
+    'product': {'type': 'one_to_one', 'required': True, 'classMap': Product}
+}
+
 ADDITIONAL_INFORMATION_PRODUCT = {
     **ADDITIONAL_INFORMATION,
-    'product': {'type': 'one_to_one', 'required': True}
+    'product': {'type': 'one_to_one', 'required': True, 'classMap': Product}
 }
 
 HISTORY_FIELDS = {
     **ADDITIONAL_INFORMATION,
-    'product': {'type': 'one_to_one', 'required': True}
+    'product': {'type': 'one_to_one', 'required': True, 'classMap': Product}
 }
 
 ADDITIONAL_FILE_FIELD = {
     'image_or_video': {'type': 'file', 'required': True},
-    'product': {'type': 'foreign_key', 'required': True}
+    'product': {'type': 'one_to_one', 'required': True, 'classMap': Product}
 }
-
 
 OTHER_INFORMATION_FOR_COLLECTION = {
     'title': {'type': 'string', 'required': True, 'unique': True},
@@ -32,10 +36,11 @@ OTHER_INFORMATION_FOR_COLLECTION = {
     'collection': {'type': 'foreign_key', 'required': True, 'classMap': Collection}
 }
 
+
 class OlfactionService(Service):
 
     def __init__(self, repository: Repository = Repository(model=Olfaction)):
-        super().__init__(repository, ADDITIONAL_INFORMATION)
+        super().__init__(repository, OLFACTION_FIELDS)
 
 
 class HistoryService(Service):

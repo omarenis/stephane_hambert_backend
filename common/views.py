@@ -59,6 +59,7 @@ class ViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = {}
+
         for i in request.data:
             if self.fields.get(i) is None:
                 return Response(data={'error': f'{i} is not an attribute for the model'}, status=HTTP_400_BAD_REQUEST)

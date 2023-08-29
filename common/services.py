@@ -17,7 +17,8 @@ class Service(object):
         for i in self.fields:
             if data.get(i) is None and self.fields[i].get('required') is True and self.fields[i].get('type') != 'slug':
                 raise ValueError(f'{i} must not be null')
-            if self.fields.get(i).get('type') == 'foreign_key' and data.get(i) is not None:
+            if (self.fields.get(i).get('type') == 'foreign_key' or self.fields.get(i).get(
+                    'type') == 'one_to_one') and data.get(i) is not None:
                 if data[i] == '':
                     data[i] = None
                 else:
@@ -97,7 +98,7 @@ class Service(object):
             for i in self.fields:
                 if self.fields[i].get('type') == 'file':
                     instance_data[i] = SimpleUploadedFile(name=str(URI(str(row[i])).path).split('/')[-1],
-                                                         content=urlopen(url=str(data.get(i))).read())
+                                                          content=urlopen(url=str(data.get(i))).read())
                 elif self.fields[i].get('type') == 'date' or self.fields[i].get('type') == 'datetime':
                     instance_data[i] = datetime.datetime.fromisoformat(data[i])
                 elif self.fields[i].get('type') == 'foreign_key':
