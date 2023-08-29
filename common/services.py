@@ -41,7 +41,7 @@ class Service(object):
             if self.fields.get(i) is None:
                 raise AttributeError(f'{i} is not an attribute on the model')
             else:
-                if self.fields.get(i).get('type') == 'foreign_key':
+                if self.fields.get(i).get('type') == 'foreign_key' or self.fields.get(i).get('type') == 'one_to_one':
                     model = self.fields.get(i).get('classMap')
                     try:
                         if data.get(i) is not None and data.get(i) != 'null':

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
 from common.views import ViewSet
-from stock_management.models import Product, Collection, ProductSerializer, CollectionSerializer
+from website.models import Product, Collection, CollectionSerializer
 from stock_management.services import CategoryService, ProductService, CollectionService
 from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer, \
     ProductPageModelSerializer, ProductListSerializer
@@ -17,7 +17,7 @@ def index(request, *args, **kwargs):
     products = Product.objects.order_by('-number_purchases')[:8]
     collections = Collection.objects.all()
     return Response(data={
-        "products": [ProductSerializer(product).data for product in products],
+        "products": [ProductListSerializer(product).data for product in products],
         "collections": [CollectionSerializer(collection).data for collection in collections]
     })
 
@@ -48,7 +48,7 @@ def product_page_controller(request, slug: str, *args, **kwargs):
 
 
 @api_view(['GET'])
-def collections_page_controller():
+def collections_page_controller(request, *args, **kwargs):
     collections = Collection.objects.all()
     collections_data = [CollectionSerializer(collection).data for collection in collections]
     return Response(data=collections_data, status=HTTP_200_OK)
@@ -83,7 +83,7 @@ urlpatterns = [
     path('public/collections', collections_page_controller),
     path('public/products/<str:slug>', product_page_controller),
     path('stock-management/other-information-for-collection', other_information_for_collection),
-    path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection),
+    path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection_instance),
     path('stock-management/olfactions', olfactions),
     path('stock-management/olfactions/<int:pk>', olfaction),
     path('stock-management/histories', histories),

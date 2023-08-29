@@ -74,7 +74,7 @@ class AdditionalFileSerializer(ModelSerializer):
 
 
 class CollectionSerializer(ModelSerializer):
-    additionalinformationcollection_set = AdditionalInformationCollectionSerializer()
+    additionalinformationcollection_set = AdditionalInformationCollectionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Collection
@@ -96,5 +96,5 @@ class ProductPageModelSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'history', 'olfaction', 'history', 'additionalfile_set', 'slug', 'id', 'description', 'price',
+        fields = ['id', 'title', 'history', 'olfaction', 'history', 'additionalfile_set', 'slug', 'id', 'description', 'price',
                   'image']
