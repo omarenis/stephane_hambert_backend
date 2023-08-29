@@ -1,14 +1,11 @@
 env
-db.sqlite3
 *.log
 *.pot
 *.pyc
 .idea
-*/__pycache__/
-*/__pycache__/*
+*/__pycache__/*.pyc
 local_settings.py
 db.sqlite3-journal
-media
 *.py[cod]
 *$py.class
 *.so
@@ -48,6 +45,7 @@ coverage.xml
 .pytest_cache/
 cover/
 *.mo
+*/migrations/*0*.py
 instance/
 .webassets-cache
 .scrapy

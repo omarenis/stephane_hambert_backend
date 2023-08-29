@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Model, FileField, ImageField
 from django.db.models.fields.files import FieldFile
 
+from backend.settings import BASE_DIR
+
 
 class Repository(object):
     def __init__(self, model: Model or AbstractUser, database='default'):
@@ -23,14 +25,15 @@ class Repository(object):
             raise self.model.DoesNotExist('item does not exists with the specified data')
 
     def put(self, pk: int, data: dict):
+
         _object = self.model.objects.get(id=pk)
         if _object is None:
             return Exception('object not found')
         else:
             for i in data:
                 if hasattr(_object, i):
-                    if isinstance(getattr(_object, i), FieldFile) or issubclass(getattr(_object, i).__class__, FieldFile):
-                        self.delete_file_from_object(file_field=getattr(_object, i))
+                    # if isinstance(getattr(_object, i), FieldFile) or issubclass(getattr(_object, i).__class__, FieldFile) and getattr(_object, i) is not None:
+                    #     self.delete_file_from_object(file_field=getattr(_object, i))
                     setattr(_object, i, data[i])
             if data.get('password') is not None and isinstance(_object, AbstractUser) or \
                     issubclass(_object.__class__, AbstractUser):
@@ -40,7 +43,9 @@ class Repository(object):
 
     @staticmethod
     def delete_file_from_object(file_field: FieldFile):
-        path = file_field.path
+        print(file_field)
+        path = str(BASE_DIR) + str(file_field)
+        print(str(file_field))
         if os.path.exists(path):
             os.remove(path=path)
 
@@ -52,7 +57,7 @@ class Repository(object):
         if instance is not None:
             for field in getattr(instance, '_meta').get_fields(include_parents=False):
                 if isinstance(field, FileField):
-                    self.delete_file_from_object(instance=instance, file_field=field)
+                    self.delete_file_from_object(getattr(instance, field.name))
         return self.model.objects.get(pk=pk).delete()
 
     def filter_by(self, data: dict, start=0, end=None, order_by=None):

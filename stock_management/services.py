@@ -33,7 +33,9 @@ PRODUCT_FIELDS = {
     'title': {'type': 'string', 'required': True, 'unique': True},
     'code': {'type': 'string', 'required': True, 'unique': True},
     'description': {'type': 'string', 'required': True},
-    'price': {'type': 'float', 'required': True},
+    'price_50_ml': {'type': 'float', 'required': True},
+    'price_100_ml': {'type': 'float', 'required': True},
+    'price_200_ml': {'type': 'float', 'required': True},
     'image': {'type': 'file', 'required': True},
     'promo': {'type': 'foreign_key', 'required': False, 'classMap': Promo},
     'current_quantity': {'type': 'integer', 'required': True},
@@ -64,8 +66,8 @@ class ProductService(Service):
             product.promo.number_products += 1
             product.promo.save()
         for category in product.category_set.all():
-                category.number_products += 1
-                category.save()
+            category.number_products += 1
+            category.save()
         return product
 
     def delete(self, pk: int):

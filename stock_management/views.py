@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from django.urls import path
-
 from common.views import ViewSet
 from stock_management.models import ProductSerializer, CategorySerializer, PromoSerializer, CollectionSerializer, \
     ProductListSerializer

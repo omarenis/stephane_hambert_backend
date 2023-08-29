@@ -2,12 +2,15 @@ from django.db.models import Model, CharField, FloatField, BigIntegerField, Text
     SET_NULL, ImageField, SlugField, ManyToManyField
 from rest_framework.serializers import ModelSerializer
 
+
 # Create your models here.
 class Product(Model):
     title = CharField(null=False, unique=True, max_length=255)
     code = CharField(null=False, unique=True, max_length=255)
     description = TextField(null=False)
-    price = FloatField(null=False)
+    price_50_ml = FloatField()
+    price_100_ml = FloatField()
+    price_20_ml = FloatField()
     current_quantity = BigIntegerField(null=False, default=1)
     image = ImageField(upload_to='images/products', null=False)
     number_purchases = BigIntegerField(null=False, default=0)
@@ -29,6 +32,7 @@ class Category(Model):
     number_products = BigIntegerField(null=False, default=0)
     number_purchases = BigIntegerField(null=False, default=0)
     total_gain = FloatField(null=False, default=0.0)
+
     def __str__(self):
         return self.title
 
@@ -90,9 +94,10 @@ class CategorySerializer(ModelSerializer):
 class ProductListSerializer(ModelSerializer):
     collection = CollectionSerializer(read_only=True)
     promo = PromoSerializer(read_only=True)
+
     class Meta:
         model = Product
-        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'image', 'number_purchases',
+        fields = ['id', 'title', 'code', 'description', 'price_20_ml', 'price_50_ml', 'price_100_ml', 'current_quantity', 'image', 'number_purchases',
                   'collection', 'promo']
 
 
@@ -103,4 +108,4 @@ class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'image', 'number_purchases',
-                  'collection', 'promo', 'comment_set']
+                  'collection', 'promo', 'comment_set', 'history', 'olfaction']

@@ -3,8 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
+from common.repositories import Repository
+from common.services import Service
 from common.views import ViewSet
-from stock_management.models import Product, Collection, ProductSerializer, CollectionSerializer
+from website.models import Product, Collection, CollectionSerializer, Present, PresentSerializer
 from stock_management.services import CategoryService, ProductService, CollectionService
 from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer, \
     ProductPageModelSerializer, ProductListSerializer
@@ -14,11 +16,27 @@ from website.services import OlfactionService, HistoryService, OtherInformationF
 # Create your views here.
 @api_view(['GET'])
 def index(request, *args, **kwargs):
-    products = Product.objects.order_by('-number_purchases')[:8]
-    collections = Collection.objects.all()
+    data = {
+        'products': None,
+        'collections': None,
+        'presents': None
+    }
+    products = None
+    presents = None
+    if request.GET.get('products') is None and request.GET.get('presents') is None:
+        data['collections'] = Collection.objects.all()
+
+    elif request.GET.get('product') == 'best_sellers':
+        products = Product.objects.order_by('-number_purchases')
+    else:
+        data['products'] = Product.objects.all()
+
+    if request.GET.get('presents'):
+        data['presents'] = Present.objects.all()
+
     return Response(data={
-        "products": [ProductSerializer(product).data for product in products],
-        "collections": [CollectionSerializer(collection).data for collection in collections]
+        "products": [ProductListSerializer(product).data for product in data['products']],
+        "collections": [CollectionSerializer(collection).data for collection in data['presents']]
     })
 
 
@@ -30,12 +48,14 @@ def products_page_controller(request, *args, **kwargs):
         filter_products = {'collection': int(request.GET.get('collection'))}
     print(ProductService().filter_by(filter_products))
     collections = [{"id": i.id, 'title': i.title} for i in CollectionService().list()]
-    products = [ProductListSerializer(product).data for product in (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
+    products = [ProductListSerializer(product).data for product in
+                (ProductService().list() if filter_products == {} else ProductService().filter_by(filter_products))]
     print(products);
     return Response(data={
         "products": products,
         "collections": collections
     })
+
 
 @api_view(['GET'])
 def product_page_controller(request, slug: str, *args, **kwargs):
@@ -43,11 +63,14 @@ def product_page_controller(request, slug: str, *args, **kwargs):
     if product is None:
         return Response(data={'message': 'product not found'}, status=HTTP_404_NOT_FOUND)
     return Response(data=ProductPageModelSerializer(product).data, status=HTTP_200_OK)
+
+
 @api_view(['GET'])
-def collections_page_controller():
+def collections_page_controller(request, *args, **kwargs):
     collections = Collection.objects.all()
-    collections_data = [CollectionSerializer(collection).data for  collection in collections]
+    collections_data = [CollectionSerializer(collection).data for collection in collections]
     return Response(data=collections_data, status=HTTP_200_OK)
+
 
 class OlfactionViewSet(ViewSet):
 
@@ -63,13 +86,22 @@ class HistoryViewSet(ViewSet):
 
 class OtherInformationCollectionViewSet(ViewSet):
 
-    def __init__(self, serializer_class=AdditionalInformationCollectionSerializer, service=OtherInformationForCollectionService(), **kwargs):
+    def __init__(self, serializer_class=AdditionalInformationCollectionSerializer,
+                 service=OtherInformationForCollectionService(), **kwargs):
+        super().__init__(serializer_class, service, **kwargs)
+
+
+class PresentViewSet(ViewSet):
+
+    def __init__(self, serializer_class=PresentSerializer, service=Service(repository=Repository(model=Present)),
+                 **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
 
 olfactions, olfaction = OlfactionViewSet.get_urls()
 histories, history = HistoryViewSet.get_urls()
 other_information_for_collection, other_information_for_collection_instance = OtherInformationCollectionViewSet.get_urls()
+presents, present =  PresentViewSet.get_urls()
 
 urlpatterns = [
     path('public/index', index),
@@ -77,9 +109,11 @@ urlpatterns = [
     path('public/collections', collections_page_controller),
     path('public/products/<str:slug>', product_page_controller),
     path('stock-management/other-information-for-collection', other_information_for_collection),
-    path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection),
+    path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection_instance),
     path('stock-management/olfactions', olfactions),
     path('stock-management/olfactions/<int:pk>', olfaction),
-    path('stock-management/histories', olfactions),
-    path('stock-management/histories/<int:pk>', olfaction)
+    path('stock-management/histories', histories),
+    path('stock-management/histories/<int:pk>', history),
+    path('cms/presents', presents),
+    path('cms/presents/<int:pk>', present),
 ]
