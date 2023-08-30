@@ -15,6 +15,7 @@ class ProductViewSet(ViewSet):
         self.serializer_class = ProductListSerializer
         return super().list(request)
 
+
 class CollectionViewSet(ViewSet):
 
     def __init__(self, serializer_class=CollectionSerializer, service=CollectionService(), **kwargs):

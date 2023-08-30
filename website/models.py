@@ -12,7 +12,7 @@ PRODUCT_MODEL = 'stock_management.Product'
 
 class Notification(Model):
     product = ForeignKey(to='stock_management.Product', on_delete=CASCADE, null=False)
-    email  = EmailField(null=False)
+    email = EmailField(null=False)
 
 
 class Olfaction(Model):
@@ -28,8 +28,8 @@ class Present(Model):
     title = CharField(max_length=255, unique=True)
 
     class Meta:
-
         db_table = 'presents'
+
 
 class AdditionalInformationCollection(Model):
     image = ImageField(upload_to='images/collections/additional_information')
@@ -46,8 +46,11 @@ class History(models.Model):
 
 
 class AdditionalFile(Model):
-    file_or_video = FileField()
-    product = ForeignKey(to=PRODUCT_MODEL, on_delete=CASCADE)
+    file_or_video_1 = FileField()
+    file_or_video_2 = FileField()
+    file_or_video_3 = FileField()
+    file_or_video_4 = FileField()
+    product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
 
 class HistorySerializer(ModelSerializer):
@@ -63,10 +66,10 @@ class AdditionalInformationCollectionSerializer(ModelSerializer):
 
 
 class PresentSerializer(ModelSerializer):
-
     class Meta:
         model = Present
         fields = '__all__'
+
 
 class OlfactionSerializer(ModelSerializer):
     class Meta:
@@ -98,10 +101,11 @@ class ProductListSerializer(ModelSerializer):
 
 class ProductPageModelSerializer(ModelSerializer):
     history = HistorySerializer()
-    additionalfile_set = AdditionalFileSerializer(read_only=True, many=True, allow_null=True)
+    additionalfile = AdditionalFileSerializer(read_only=True, allow_null=True)
     olfaction = OlfactionSerializer()
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'history', 'olfaction', 'history', 'additionalfile_set', 'slug', 'id', 'description', 'price',
+        fields = ['id', 'title', 'history', 'olfaction', 'history', 'additionalfile', 'slug', 'id', 'description',
+                  'price',
                   'image']

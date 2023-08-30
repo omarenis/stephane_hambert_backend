@@ -6,12 +6,13 @@ from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from common.repositories import Repository
 from common.services import Service
 from common.views import ViewSet
-from website.models import Product, Collection, CollectionSerializer, Present, PresentSerializer
+from website.models import Product, Collection, CollectionSerializer, Present, PresentSerializer, \
+    AdditionalFileSerializer
 from stock_management.services import CategoryService, ProductService, CollectionService
 from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer, \
     ProductPageModelSerializer, ProductListSerializer
 from website.services import OlfactionService, HistoryService, OtherInformationForCollectionService, \
-    ADDITIONAL_INFORMATION
+    ADDITIONAL_INFORMATION, AdditionAlFileService
 
 
 # Create your views here.
@@ -92,15 +93,23 @@ class OtherInformationCollectionViewSet(ViewSet):
 
 class PresentViewSet(ViewSet):
 
-    def __init__(self, serializer_class=PresentSerializer, service=Service(repository=Repository(model=Present), fields=ADDITIONAL_INFORMATION),
+    def __init__(self, serializer_class=PresentSerializer,
+                 service=Service(repository=Repository(model=Present), fields=ADDITIONAL_INFORMATION),
                  **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 
 
+class AdditionalFileProductViewSet(ViewSet):
+
+    def __init__(self, serializer_class=AdditionalFileSerializer, service=AdditionAlFileService(), **kwargs):
+        super().__init__(serializer_class, service, **kwargs)
+
+
+additional_files, additional_file = AdditionalFileProductViewSet.get_urls()
 olfactions, olfaction = OlfactionViewSet.get_urls()
 histories, history = HistoryViewSet.get_urls()
 other_information_for_collection, other_information_for_collection_instance = OtherInformationCollectionViewSet.get_urls()
-presents, present =  PresentViewSet.get_urls()
+presents, present = PresentViewSet.get_urls()
 
 urlpatterns = [
     path('public/index', index),
@@ -109,6 +118,8 @@ urlpatterns = [
     path('public/products/<str:slug>', product_page_controller),
     path('stock-management/other-information-for-collection', other_information_for_collection),
     path('stock-management/other-information-for-collection/<int:pk>', other_information_for_collection_instance),
+    path('stock-management/additional_files', additional_files),
+    path('stock-management/additional_files/<int:pk>', additional_file),
     path('stock-management/olfactions', olfactions),
     path('stock-management/olfactions/<int:pk>', olfaction),
     path('stock-management/histories', histories),
