@@ -4,6 +4,7 @@ env
 *.pyc
 .idea
 */__pycache__/*.pyc
+*/__pycache__/*
 local_settings.py
 db.sqlite3-journal
 *.py[cod]
