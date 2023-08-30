@@ -9,42 +9,37 @@ PRODUCT_MODEL = 'stock_management.Product'
 
 # Create your models here.
 
-class Inscription(models.Model):
-    email = EmailField(null=False)
-
 
 class Notification(Model):
     product = ForeignKey(to='stock_management.Product', on_delete=CASCADE, null=False)
-    customer = ForeignKey(to='crm.CustomerProfile', on_delete=CASCADE, null=False)
-
-
-class News(models.Model):
-    subject = CharField(max_length=255, null=False)
-    description = TextField()
+    email  = EmailField(null=False)
 
 
 class Olfaction(Model):
-    image = ImageField(upload_to='products/olfactions')
+    image = ImageField(upload_to='images/products/olfactions')
     content = TextField()
     title = CharField(max_length=255)
     product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
 
 
 class Present(Model):
-    image = ImageField(upload_to='products/presents')
-    content = TextField()
-    title = CharField(max_length=255)
+    image = ImageField(upload_to='images/presents')
+    content = TextField(blank=True)
+    title = CharField(max_length=255, unique=True)
 
+    class Meta:
+
+        db_table = 'presents'
 
 class AdditionalInformationCollection(Model):
-    image = ImageField(upload_to='collections/additional_information')
+    image = ImageField(upload_to='images/collections/additional_information')
     content = TextField()
     title = CharField(max_length=255)
     collection = ForeignKey(to='stock_management.Collection', on_delete=CASCADE)
 
 
 class History(models.Model):
-    image = ImageField(upload_to='products/histories')
+    image = ImageField(upload_to='images/products/histories')
     content = TextField()
     title = CharField(max_length=255)
     product = OneToOneField(to=PRODUCT_MODEL, on_delete=CASCADE)
@@ -71,7 +66,7 @@ class PresentSerializer(ModelSerializer):
 
     class Meta:
         model = Present
-        fields = '__all_'
+        fields = '__all__'
 
 class OlfactionSerializer(ModelSerializer):
     class Meta:

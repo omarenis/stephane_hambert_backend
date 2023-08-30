@@ -6,20 +6,17 @@ from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from .models import Subscription, SubscriptionSerializer
 from .services import delete_subscription
 
+@api_view(['GET', 'POST'])
+def get_inscriptions(request, *args, **kwargs):
+    if request.method == 'POST':
+        try:
+            Subscription.objects.get(email=request.data.get('email'))
+            return Response(data={'message': 'email already exists in our newsletter subscription'})
+        except Subscription.DoesNotExist:
+            Subscription.objects.create(email=request.data.get('email'))
+            return Response(data={'message': 'email successfully added to newsletter subscription'})
 
-@api_view(['POST'])
-def create_inscription(request, *args, **kwargs):
-    try:
-        Subscription.objects.get(email=request.data.get('email'))
-        return Response(data={'message': 'email successfully added to newsletter subscription'})
-    except ValueError:
-        return Response(data={'message': 'email already exists in our newsletter subscription'})
-
-
-@api_view(['GET'])
-def get_subscriptions(request, *args, **kwargs):
-    return Response(data=[SubscriptionSerializer(i).data for i in Subscription.objects.all()
-                          if SubscriptionSerializer(i).is_valid()], status=HTTP_200_OK)
+    return Response(data=[SubscriptionSerializer(i).data for i in Subscription.objects.all()], status=HTTP_200_OK)
 
 
 @api_view(['DELETE'])
@@ -31,7 +28,6 @@ def delete_subscription_view(request, pk=None, *args, **kwargs):
 
 
 urlpatterns = [
-    path('subscriptions', get_subscriptions),
-    path('subscriptions', create_inscription),
+    path('subscriptions', get_inscriptions),
     path('subsciptions/<int:pk>', delete_subscription_view)
 ]

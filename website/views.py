@@ -10,7 +10,8 @@ from website.models import Product, Collection, CollectionSerializer, Present, P
 from stock_management.services import CategoryService, ProductService, CollectionService
 from website.models import OlfactionSerializer, HistorySerializer, AdditionalInformationCollectionSerializer, \
     ProductPageModelSerializer, ProductListSerializer
-from website.services import OlfactionService, HistoryService, OtherInformationForCollectionService
+from website.services import OlfactionService, HistoryService, OtherInformationForCollectionService, \
+    ADDITIONAL_INFORMATION
 
 
 # Create your views here.
@@ -91,7 +92,7 @@ class OtherInformationCollectionViewSet(ViewSet):
 
 class PresentViewSet(ViewSet):
 
-    def __init__(self, serializer_class=PresentSerializer, service=Service(repository=Repository(model=Present)),
+    def __init__(self, serializer_class=PresentSerializer, service=Service(repository=Repository(model=Present), fields=ADDITIONAL_INFORMATION),
                  **kwargs):
         super().__init__(serializer_class, service, **kwargs)
 

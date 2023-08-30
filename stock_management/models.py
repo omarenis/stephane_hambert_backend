@@ -41,7 +41,7 @@ class Category(Model):
 
 
 class Collection(Model):
-    image = ImageField(upload_to='mages/collections', null=False)
+    image = ImageField(upload_to='images/collections', null=False)
     title = CharField(null=False, unique=True, max_length=255)
     content = TextField(null=False)
     number_products = BigIntegerField(null=False, default=0)
@@ -107,5 +107,5 @@ class ProductSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'code', 'description', 'price', 'current_quantity', 'image', 'number_purchases',
+        fields = ['id', 'title', 'code', 'description', 'price_20_ml', 'price_50_ml', 'price_100_ml', 'current_quantity', 'image', 'number_purchases',
                   'collection', 'promo', 'comment_set', 'history', 'olfaction']

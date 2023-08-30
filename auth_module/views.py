@@ -85,6 +85,14 @@ def reset_password(request, *args, **kwargs):
     user.save()
     return Response(data={'message': 'password reset successfully'}, status=HTTP_200_OK)
 
+
+@csrf_exempt
+@api_view(http_method_names=['POST'])
+def logout(request, *args, **kwargs):
+    token = RefreshToken(request.data.get('refresh'))
+    token.blacklist()
+    return Response(status=HTTP_204_NO_CONTENT)
+
 #
 # @api_view(['GET', 'POST'])
 # def forget_password(request, *args, **kwargs):
@@ -93,6 +101,7 @@ def reset_password(request, *args, **kwargs):
 urlpatterns = [
     path('login', login_view),
     path('signup', signup_view),
+    path('logout', logout),
     path('verify_code', verify_code_view),
     path('reset_password', reset_password)
 ]
