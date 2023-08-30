@@ -27,7 +27,10 @@ HISTORY_FIELDS = {
 }
 
 ADDITIONAL_FILE_FIELD = {
-    'image_or_video': {'type': 'file', 'required': True},
+    'image_or_video_1': {'type': 'file', 'required': False},
+    'image_or_video_2': {'type': 'file', 'required': False},
+    'image_or_video_3': {'type': 'file', 'required': False},
+    'image_or_video_4': {'type': 'file', 'required': False},
     'product': {'type': 'one_to_one', 'required': True, 'classMap': Product}
 }
 

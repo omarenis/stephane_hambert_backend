@@ -11,7 +11,8 @@ STATISTICS_FIELDS = {
 COLLECTION_FIELDS = {
     'title': {'type': 'string', 'required': True, 'unique': True},
     'content': {'type': 'string', 'required': True},
-    'image': {'type': 'image', 'required': True}
+    'image': {'type': 'image', 'required': True},
+    'citation': {'type': 'string', 'required': False}
 }
 
 CATEGORY_FIELDS = {
@@ -35,7 +36,7 @@ PRODUCT_FIELDS = {
     'description': {'type': 'string', 'required': True},
     'price_50_ml': {'type': 'float', 'required': True},
     'price_100_ml': {'type': 'float', 'required': True},
-    'price_200_ml': {'type': 'float', 'required': True},
+    'price_20_ml': {'type': 'float', 'required': True},
     'image': {'type': 'file', 'required': True},
     'promo': {'type': 'foreign_key', 'required': False, 'classMap': Promo},
     'current_quantity': {'type': 'integer', 'required': True},
