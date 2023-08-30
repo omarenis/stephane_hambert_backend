@@ -96,7 +96,7 @@ class ProductListSerializer(ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['slug', 'title', 'price', 'image', 'promo']
+        fields = ['slug', 'title', 'price_20_ml', 'image', 'promo']
 
 
 class ProductPageModelSerializer(ModelSerializer):
@@ -107,5 +107,5 @@ class ProductPageModelSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'title', 'history', 'olfaction', 'history', 'additionalfile', 'slug', 'id', 'description',
-                  'price',
+                  'price_20_ml',
                   'image']
