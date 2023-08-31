@@ -69,8 +69,7 @@ class ViewSet(ModelViewSet):
         for i in self.fields:
             if self.fields[i].get('unique') is True:
                 try:
-                    print(self.service.repository.model.objects.get(**{i: data[i]}))
-                    self.service.repository.model.objects.get(**{i: data[i]})
+                    _ = self.service.repository.model.objects.get(**{i: data[i]})
                     return Response(
                         data={'message': f'{i} must be unique to each {self.service.repository.model.__name__}'},
                         status=HTTP_400_BAD_REQUEST)

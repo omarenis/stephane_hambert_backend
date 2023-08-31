@@ -49,7 +49,8 @@ class Service(object):
                     except model.DoesNotExist:
                         raise ObjectDoesNotExist(f'{i} with id = {data[i]} does not exist')
                 else:
-                    raw[i] = data[i]
+                    if self.fields.get(i).get('type') != 'file' or self.fields.get(i).get('type') != 'file' and data[i] is not None and data[i] != '':
+                        raw[i] = data[i]
         return raw
 
     def __init__(self, repository: Repository, fields: dict):
