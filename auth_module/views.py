@@ -66,7 +66,8 @@ def signup_view(request, *args, **kwargs):
             'first_name': request.data.get('first_name'),
             'last_name': request.data.get('last_name'),
             'email': request.data.get('email'),
-            'password': request.data.get('password')
+            'password': request.data.get('password'),
+            'customerprofile': request.data.get('customerprofile')
         })
         return Response(status=HTTP_201_CREATED, data={})
     except Exception as exception:

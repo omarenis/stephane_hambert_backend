@@ -29,12 +29,12 @@ class CustomerService(Service):
             fields = USER_FIELDS
 
         super().__init__(repository, fields)
-        self.fields.update(CUSTOMER_FIELDS)
         self.customer_repository = Repository(model=CustomerProfile)
 
     def create(self, data: dict):
         try:
-            User.objects.get(username=data.get('username'))
+            _ = User.objects.get(username=data.get('username'))
+            print(_)
             raise ValueError('user found with given username')
         except User.DoesNotExist:
             try:
@@ -53,10 +53,6 @@ class CustomerService(Service):
             user.save()
             self.customer_repository.create({
                     'user': user,
-                    'facebook': data.get('facebook'),
-                    'google': data.get('google'),
-                    'phone': data.get('phone'),
-                    'gender': data.get('gender'),
-                    'address': data.get('address')
+                    **data.get('customerprofile')
             })
             return user

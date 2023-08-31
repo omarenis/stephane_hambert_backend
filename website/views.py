@@ -18,25 +18,27 @@ from website.services import OlfactionService, HistoryService, OtherInformationF
 # Create your views here.
 @api_view(['GET'])
 def index(request, *args, **kwargs):
+    productService = ProductService()
     data = {
-        'products': [],
         'collections': [],
         'presents': []
     }
+    print(request.GET.get('product'))
+    print(productService.list())
     if request.GET.get('products') is None and request.GET.get('presents') is None:
         data['collections'] = Collection.objects.all()
 
-    elif request.GET.get('product') == 'best_sellers':
+    if request.GET.get('product') == 'best_sellers':
         data['products'] = Product.objects.order_by('-number_purchases')
     else:
-        data['products'] = Product.objects.all()
-
+        data['products'] = productService.list()
+        print(data)
     if request.GET.get('presents'):
         data['presents'] = Present.objects.all()
-
+    print(data)
     return Response(data={
         "products": [ProductListSerializer(product).data for product in data['products']],
-        "collections": [CollectionSerializer(collection).data for collection in data['presents']],
+        "collections": [CollectionSerializer(collection).data for collection in data['collections']],
         "presents": [PresentSerializer(present).data for present in data['presents']]
     })
 
