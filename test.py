@@ -1,9 +1,23 @@
+import os
+
 import requests
 from requests.auth import HTTPBasicAuth
 
 client_id = "ATn0ffXhzXyEsGaezH4t4kIrGACJvOdt1CiuuAda3iypiwmqK8jaWFAMlgxlswxErhOZRlUqiKfh6hN-"
 client_secret = "EJV-MWkDz78NAlW5JW9YcNFkxKJhTCZBYrg4ukDeUM5_gD-SJEULDwpcQZ197Adw5AnNXiVvlD0_D8gO"
+from paypalpayoutssdk.core import PayPalHttpClient, SandboxEnvironment
 
+
+class PayPalClient:
+    def __init__(self):
+        self.client_id = os.environ["PAYPAL-CLIENT-ID"] if 'PAYPAL-CLIENT-ID' in os.environ else client_id
+        self.client_secret = os.environ[
+            "PAYPAL-CLIENT-SECRET"] if 'PAYPAL_CLIENT_SECRET' in os.environ else client_secret
+        self.environment = SandboxEnvironment(client_id=self.client_id, client_secret=self.client_secret)
+        self.client = PayPalHttpClient(self.environment)
+
+
+print(PayPalClient().client)
 
 def get_access_token_and_token_type():
     request = requests.post(url="https://api-m.sandbox.paypal.com/v1/oauth2/token",
@@ -17,15 +31,17 @@ def get_access_token_and_token_type():
 
 
 def payment_function():
+    data = get_access_token_and_token_type()
     import requests
-
     headers = {
-        'X-PAYPAL-SECURITY-CONTEXT': '{"actor":{"account_number":"1659371090107732880","party_id":"1659371090107732880","auth_claims":["AUTHORIZATION_CODE"],"auth_state":"ANONYMOUS","client_id":"zf3..4BQ0T9aw-ngFr9dmOUZMwuKocrqe72Zx9D-Lf4"},"auth_token":"A015QQVR4S3u79k.UvhQ-AP4EhQikqOogdx-wIbvcvZ7Qaw","auth_token_type":"ACCESS_TOKEN","last_validated":1393560555,"scopes":["https://api-m.sandbox.paypal.com/v1/payments/.*","https://api-m.sandbox.paypal.com/v1/vault/credit-card/.*","openid","https://uri.paypal.com/services/payments/futurepayments","https://api-m.sandbox.paypal.com/v1/vault/credit-card","https://api-m.sandbox.paypal.com/v1/payments/.*"],"subjects":[{"subject":{"account_number":"2245934915437588879","party_id":"2245934915437588879","auth_claims":["PASSWORD"],"auth_state":"LOGGEDIN"}}]}',
+        'Content-Type': 'application/json',
+        'PayPal-Request-Id': '7b92603e-77ed-4896-8e78-5dea2050476a',
+        'Authorization': f'{data["token_type"]} {data["access_token"]}',
     }
 
-    data = '{ "intent": "sale", "payer": { "payment_method": "paypal" }, "transactions": [ { "amount": { "total": "30.11", "currency": "USD", "details": { "subtotal": "30.00", "tax": "0.07", "shipping": "0.03", "handling_fee": "1.00", "shipping_discount": "-1.00", "insurance": "0.01" } }, "description": "The payment transaction description.", "custom": "EBAY_EMS_90048630024435", "invoice_number": "48787589673", "payment_options": { "allowed_payment_method": "INSTANT_FUNDING_SOURCE" }, "soft_descriptor": "ECHI5786786", "item_list": { "items": [ { "name": "hat", "description": "Brown hat.", "quantity": "5", "price": "3", "tax": "0.01", "sku": "1", "currency": "USD" }, { "name": "handbag", "description": "Black handbag.", "quantity": "1", "price": "15", "tax": "0.02", "sku": "product34", "currency": "USD" } ], "shipping_address": { "recipient_name": "Brian Robinson", "line1": "4th Floor", "line2": "Unit #34", "city": "San Jose", "country_code": "US", "postal_code": "95131", "phone": "011862212345678", "state": "CA" } } } ], "note_to_payer": "Contact us for any questions on your order.", "redirect_urls": { "return_url": "https://example.com/return", "cancel_url": "https://example.com/cancel" } }'
+    data = '{ "intent": "CAPTURE", "purchase_units": [ { "reference_id": "d9f80740-38f0-11e8-b467-0ed5f89f718b", "amount": { "currency_code": "USD", "value": "100.00" } } ], "payment_source": { "paypal": { "experience_context": { "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED", "brand_name": "EXAMPLE INC", "locale": "en-US", "landing_page": "LOGIN", "shipping_preference": "SET_PROVIDED_ADDRESS", "user_action": "PAY_NOW", "return_url": "https://example.com/returnUrl", "cancel_url": "https://example.com/cancelUrl" } } } }'
 
-    response = requests.post('https://api-m.sandbox.paypal.com/v1/payments/payment', headers=headers, data=data)
+    response = requests.post('https://api-m.sandbox.paypal.com/v2/checkout/orders', headers=headers, data=data)
     print(response.json())
 
 
