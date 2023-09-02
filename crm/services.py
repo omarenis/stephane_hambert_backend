@@ -47,7 +47,7 @@ class CustomerService(Service):
                     first_name=data.get('first_name'),
                     last_name=data.get('last_name'),
                     email=data.get('email'),
-                    is_active=True
+                    is_active=False
                 )
             user.set_password(raw_password=data.get('password'))
             user.save()

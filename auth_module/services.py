@@ -40,7 +40,6 @@ def find_user_by_username_or_email(data):
 
 
 def login(data: dict):
-    print(data)
     password = data.pop('password')
     try:
         validate_email(data.get('username'))
@@ -49,7 +48,6 @@ def login(data: dict):
         pass
     try:
         user = User.objects.get(**data)
-        print(user.check_password('Admin@Admin'))
         if user.check_password(password) is True:
             if user.is_superuser is True:
                 return user
