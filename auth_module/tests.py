@@ -1,10 +1,5 @@
-import json
-import requests
 from django.test import TestCase
-from authlib.oauth1.client import OAuth1Client
-
 from auth_module.services import send_code, verify_code, signup
-from backend.settings import CLIEND_ID, CLIENT_SECRET
 
 
 # Create your tests here.
@@ -19,7 +14,7 @@ class AuthTest(TestCase):
         print(type(response))
 
     def test_verify_code(self):
-        response = verify_code(email=self.valid_email, code=984820)
+        response = verify_code(email=self.valid_email, code=612713)
         print(response.text)
 
     def test_signup(self):
@@ -27,11 +22,13 @@ class AuthTest(TestCase):
             "username": "@omartriki712",
             "email": "omartriki712@gmail.com",
             "password": "omartriki712@+=",
-            "first_name": "triki",
-            "last_name": "omar",
-            "facebook": None,
-            "google": "omartriki712@gmail.com",
-            "phone": "+21624127616"
+            "customerprofile": {
+                "first_name": "triki",
+                "last_name": "omar",
+                "facebook": None,
+                "google": "omartriki712@gmail.com",
+                "phone": "+21624127616"
+            }
         }
         user = signup(data=data)
-
+        print(user)

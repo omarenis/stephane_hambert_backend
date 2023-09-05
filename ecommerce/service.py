@@ -27,4 +27,3 @@ class OrderService(Service):
             fields = ORDER_FIELDS
         super().__init__(repository, fields)
         self.order_line_repository = Repository(model=OrderLine)
-
